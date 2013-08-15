@@ -1,0 +1,58 @@
+<LAISScript>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Ant</agentPrototype>
+			<agStateMap>
+				<entry stateType="State">No Food</entry>
+			</agStateMap>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>100000</quantity>
+			</quantityConstrain>
+			<locationConstrain class="org.laseeb.LAIS.event.agdeploy.RectangularLocationConstrain">
+				<minX>28</minX>
+				<minY>28</minY>
+				<maxX>28</maxX>
+				<maxY>28</maxY>
+			</locationConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.subdeploy.SubstanceDeploy">
+			<substance>Home</substance>
+			<concentrationConstrain class="org.laseeb.LAIS.event.subdeploy.FixedConcentrationConstrain">
+				<concentration>1000000.0</concentration>
+			</concentrationConstrain>
+			<locationConstrain class="org.laseeb.LAIS.event.subdeploy.RectangularLocationConstrain">
+				<x1>27</x1>
+				<y1>27</y1>
+				<x2>32</x2>
+				<y2>32</y2>
+			</locationConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.subdeploy.SubstanceDeploy">
+			<substance>Food</substance>
+			<concentrationConstrain class="org.laseeb.LAIS.event.subdeploy.FixedConcentrationConstrain">
+				<concentration>1000000.0</concentration>
+			</concentrationConstrain>
+			<locationConstrain class="org.laseeb.LAIS.event.subdeploy.RectangularLocationConstrain">
+				<x1>2</x1>
+				<y1>2</y1>
+				<x2>6</x2>
+				<y2>6</y2>
+			</locationConstrain>
+		</Event>
+	</scriptedEvent>
+	
+
+</LAISScript>

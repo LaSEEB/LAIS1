@@ -1,0 +1,48 @@
+The following libraries, not included in this distribution, may be required by Repast classes currently not used by LAIS.  If you need any of these libraries you can download Repast J directly, which ships with all of these libraries by default. You can also download the libraries from the respective websites (probably).
+
+* Library: Apache POI - Java API To Access Microsoft Format Files
+* Repast classes affected: ExcelFileWriter, ExcelMatrixReader, ShortestNetworkPath.
+- Note: The Apache POI distribution which comes with Repast J 3.1 contains a file called "log4j.properties" which will interfere with LAIS logging abilities. Please remove this file if you use such this library.
+
+* Libray: OpenMap
+* Repast classes affected: RepastOMMultilayer, OpenMapDisplay, OpenMapAgent
+
+* Libray: GeoTools
+* Repast classes affected: GeotoolsAgent, DefaultGeotoolsAgent, OpenMapData, GeotoolsData
+
+* Libray: JTS Topology Suite
+* Repast classes affected: GeotoolsAgent, DefaultGeotoolsAgent, OpenMapData, GeotoolsData
+
+* Library: Joone - Java Object Oriented Neural Engine.
+* Repast classes affected: NeuralUtils, NeuralWrapper
+
+* Library: Jep - Java Math Expression Parser.
+* Repast classes affected: CEquation
+
+* Library: ASM - Java bytecode manipulation and analysis framework.
+* Repast classes affected: apparently none
+
+* Library: JODE - Java Optimize and Decompile Environment.
+* Repast classes affected: apparently none
+
+* Library: JH - Java Help.
+* Repast classes affected: apparently none
+
+* Library: JGap - Java Genetic Algorithms Package.
+* Repast classes affected: apparently none
+	
+* Library: Ibis.
+* Repast classes affected: apparently none
+
+* Library: Apache Commons Logging.
+* Repast classes affected: apparently none.
+
+* Library: Apache Commons Collection.
+* Repast classes affected: apparently none.
+
+* Library: old versions of JUnit and log4j.
+* Repast classes affected: apparently none.
+
+
+
+

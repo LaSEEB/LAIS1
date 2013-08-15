@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>LaSEEB Projects by N. Fachada| Instituto Superior T&eacute;cnico</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://www.ist.utl.pt/css/iststyle.css" />
+<link rel="stylesheet" type="text/css" media="print" href="http://www.ist.utl.pt/css/print.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://web.ist.utl.pt/info/css/webpages.css"/>
+<style type="text/css">
+#mywrapper {
+	float: left;
+	position: relative;	
+	top: 200px;
+	}
+
+	#mywrapper p {
+	font: 1.1em/1.5em "Lucida Grande", "Lucida Bright", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #666;
+	}
+</style> 
+</head>
+<body>
+<p class="skipnav"><a href="#main">Saltar men&uacute; de navega&ccedil;&atilde;o</a></p>
+<!-- START HEADER -->
+	<div id="logoist">
+		<h1><a href="http://www.ist.utl.pt">Instituto Superior Técnico</a></h1>
+		<!-- <img alt="[Logo] Instituto Superior Técnico" height="51" src="http://www.ist.utl.pt/img/wwwist.gif" width="234" /> -->
+	</div>
+	<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login .IST</a> | <a href="https://ciist.ist.utl.pt/contactos.php">Contactos</a></div>
+<!-- END HEADER -->
+<!--START MAIN CONTENT -->
+<div id="container">
+<div id="mywrapper">
+	<h2>LAIS - Agent-based Simulator</h2>
+	<p class="info"><b>LAIS v0.2.1beta (27/03/2009)</b></p>
+	<p class="info">Download <a href="LAIS_complete_0.2.1.zip">LAIS complete (bin+src+doc)</a> <em>for more curious users or developers</em>.</p>
+	<ul>
+		<li>Fixed batch mode bug which prevented writing output data.</li>
+	</ul>
+	<p class="info"><b>LAIS v0.2beta (20/02/2009)</b></p>
+	<p class="info">Download <a href="LAIS_light_0.2.zip">LAIS light (binaries)</a> <em>for users</em>.</p>
+	<p class="info">Download <a href="LAIS_complete_0.2.zip">LAIS complete (bin+src+doc)</a> <em>for more curious users or developers</em>.</p>
+	<p class="info">Download <a href="LAIS_fullproject_0.2.zip">LAIS full eclipse project</a> <em>for developers using Eclipse</em>.</p>	
+	<p class="info">Download <a href="200901_LAIS.ppt"> Introduction to LAIS</a>.</p>
+	<ul>
+		<li>Changes in spaces: renamed HexTorusSpaceFactory to HexSpaceFactory; added SquareSpaceFactory (with &lt;moore&gt; tag, which if true will provide a Moore neighborhood square space); added &lt;torus&gt; tag to both space factories (if true, space will be toroidal).</li>
+		<li>Added InertialMovementCondition JUNIT test and corrected some bugs.</li>
+		<li>Improved load balancing (threads request cells as needed).</li>
+		<li>Added agent views in cells; views can be used by conditions to quickly get information about what agents are in a cell according to a criteria defined by those same conditions.</li>
+		<li>Improved documentation (quantity and quality).</li>
+		<li>Added QuickProfiler class which allows developers to rapidly pinpoint performance bottlenecks.</li>
+		<li>Corrected bug which would not allow simulations with different x and y dimensions.</li>
+		<li>Updated MatLab charting scripts.</li>
+	</ul>
+	<p class="info"><b>LAIS v0.1.1beta (27/01/2009)</b></p>
+	<ul>
+		<li>Improved cell probing regarding agents, with more detailed information.</li>
+		<li>Improved launcher, only shows really essential errors and info.</li>
+	</ul>
+	<p class="info"><b>LAIS v0.1beta (23/01/2009)</b></p>
+	<ul>
+		<li>Solved bugs in concurrent access to agent and substance collections within CA cells.</li>
+		<li>New concurrent random class (ConcurrentRandom), which provides a unique random number stream for each thread. This solves random lib bug in multicore multithreaded simulations, which manifested essentially in Windows.</li>
+		<li>Introduced unit tests with JUnit! For now only ConcurrentRandom and SubConNeighMovCondition classes have tests.</li>
+		<li>Solved bugs in SubConNeighMovCondition.</li>
+		<li>Improved in-simulation exception handling.</li>
+		<li>Substitute System.out.println's by adequate logging calls, modifiable during runtime (using log4j).</li>
+		<li>Now uses Ant for building the project.</li>
+		<li>Improved cell probing with detailed information about agents and substances.</li>
+		<li>Predator-Prey with chemotaxis example.</li>
+		<li>About button.</li>
+		<li>More examples in documentation.</li>
+	</ul>
+	<p class="info">LAIS alpha version 0.20081222</a></p>
+	<ul>
+		<li>New ant simulation, which doesn't work (not because of LAIS, but because of the expert ant modeller who made the model).</li>
+		<li>Clean substance repository between runs (secondary runs were always slower)</li>
+		<li>True gene cloning, needs more memory but is NEEDED for conditions and actions to maintain individual state (such as the InertialMovementCondition) and suffer individual mutations (tough currently no condition or action directly undergo mutation).</li>
+		<li>More apropriate exception handling, altough certain exceptions are unacessible to treatment by LAIS because they occur on threads started by Repast classes. Will be improved in next release.</li>
+		<li>Print ticks/percent from x to x iterations with percentage (batch mode).</li>
+		<li>Institutional logos: LaSEEB, ISR, IST.</li>
+		<li>Possible to choose directory where to save information.</li>
+		<li>New condition which incorporates several walk conditions (p.e. mix inertial walk with chemotaxic walk).</li>
+		<li>Fixed bug in inertial walk condition.</li>
+	</ul>
+	<p class="info">LAIS alpha version 0.20081213</a></p>
+	<ul>
+		<li>GUI for loading XML files and launching LAIS/Repast. Much more user friendly!</li>
+		<li>All conditions and actions now have detailed documentation of how to be instantiated.</li>
+		<li>Improved documentation.</li>
+		<li>Refactoring of base packages.</li>
+	</ul>
+	<p class="info">LAIS alpha version 0.20081121</p>
+	<ul>
+		<li>Redesigned packaging (more organized)</li>
+		<li>2D factories, allowing different simulation environments</li>
+		<li>Rules are now known as Conditions, conforming to AI nomenclature</li>
+	</ul>
+	<p class="info">LAIS alpha version 0.20080712</p>
+	<ul>
+		<li>Improved docs</li>
+		<li>Lower memory usage</li>
+		<li>New change state rule based on referenced substances (implicit state change)</li>
+		<li>Fixed bug in previously non-tested contrains</li>
+		<li>Facilitated deployment, agent and substance deploy now have default constrains (tidier XML)</li>
+		<li>New directory for simulation XML files</li>
+		<li>Includes XML for humoral (bacteria, memory) and CMI (influenza shift and drift) simulations</li>
+	</ul>
+	<p class="info">LAIS alpha version 0.20080702a</p>
+	<ul>
+		<li>Specify random seed in XML (so batch mode has configurable seed)</li>
+		<li>Fixed bug in GUI that caused crash after stop and setup new sim</li>
+		<li>Fixed bug in batch mode where extra empty directory was created</li>
+		<li>Auto performs reset of substance merge rules between runs</li>
+		<li>New Matlab script to create data charts from files saved in GUI mode</li>
+	</ul>
+	<p class="info">LAIS alpha version 0.20080630a</a></p>
+	<ul>
+		<li>Fixed bug in org.laseeb.LAIS.events.subdeploy.RectangularLocationConstrain (rectangular substance deployment, didn't work!)</li>
+		<li>New default behaviour: agents can change state only once per tick, and change is only applied in next tick</li>
+		<li>Improved documentation</li>
+	</ul>
+	<p class="info">LAIS alpha version 0.20080629a</a></p>
+	<ul>
+		<li>Optimized substance diffusion (much faster)</li>
+		<li>Added a Matlab script to automatically create nice simulation charts for publishing</li>
+	</ul>
+	<p class="info">LAIS alpha version 0.20080628a</a></p>
+	<ul>
+		<li>Automatic thread adjustment depending on the number of available processors</li>
+		<li>Events at button press</li>
+		<li>Batch simulations (without GUI)</li>
+		<li>Fixed multithreading bug</li>
+	</ul>
+	<h2>Simulim</h2>
+	<p class="info">Download <a href="simulim.zip">Last version (discontinued)</a></p>
+	<br/>
+	<p>Visit my <a href="https://fenix.ist.utl.pt/homepage/ist145239/">IST page</a></p>
+	<p>Visit the <a href="http://www.laseeb.org/">LaSEEB website</a></p>
+</div> <!-- #wrapper -->
+</div> <!-- #container -->
+</body>
+</html>

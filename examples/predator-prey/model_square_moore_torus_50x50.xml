@@ -1,0 +1,127 @@
+<LAISModel id="model" rngSeed="1" numThreads="8">
+	<spaceFactory class="org.laseeb.LAIS.space.SquareSpaceFactory">
+		<x>50</x>
+		<y>50</y>
+		<torus>true</torus>
+		<moore>true</moore>
+	</spaceFactory>
+	<dt>1</dt>
+	<dx2>1</dx2>
+	<minConThreshold>0.00000001</minConThreshold>
+	<substanceMan>
+		<families>
+			<family id="pheroFamily">
+				<name>Pheromone family</name>
+				<subMaxColorImpactCon>1</subMaxColorImpactCon>
+			</family>
+		</families>
+		<substances>
+			<substance id="pheromone" kDif="0.3" kDeg="-0.05">
+				<name>Pheromone</name>
+				<family reference="pheroFamily"/>
+				<color>255,0,0</color>
+			</substance>
+		</substances>
+		<subFamilyMergeRules>
+		</subFamilyMergeRules>
+	</substanceMan>
+	<agentMan>
+		<!--
+		*************************
+		Prey agent
+		*************************
+		-->
+		<agentDefinition name="Prey">
+			<agentPrototype id="preyPrototype">
+				<genome>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+								<inertia>0.7</inertia>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- Produced locally -->
+								<substance>pheromoneAgRef</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>pheromoneAgRef</string>
+						<SubstanceProxy>
+							<substance reference="pheromone"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+				</states>
+				<color>0,250,50</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*************************
+		Predator agent
+		*************************
+		-->
+		<agentDefinition name="Predator">
+			<agentPrototype>
+				<genome>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+								<index>0</index>
+								<chemopower>0.9</chemopower>
+								<subMap>
+									<entry subRef="pheromoneAgRef">1.0</entry>
+								</subMap>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.AgentPresenceCondition">
+								<index>0</index>
+								<prototype reference="preyPrototype"/>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.KillAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>pheromoneAgRef</string>
+						<SubstanceProxy>
+							<substance reference="pheromone"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+				</states>
+				<color>0,0,0</color>
+			</agentPrototype>
+		</agentDefinition>
+	</agentMan>
+</LAISModel>

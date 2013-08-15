@@ -1,0 +1,3056 @@
+<LAISModel id="model" rngSeed="1000">
+	<spaceFactory class="org.laseeb.LAIS.space.HexSpaceFactory">
+		<x>14</x>
+		<y>14</y>
+		<torus>true</torus>
+	</spaceFactory>
+	<dt>1</dt>
+	<dx2>1</dx2>
+	<minConThreshold>0.01</minConThreshold>
+	<substanceMan>
+		<families>
+			<family id="antigens">
+				<name>Antigens</name>
+				<color>255,0,0</color>
+				<subMaxColorImpactCon>1</subMaxColorImpactCon>
+			</family>
+			<family id="antibodies">
+				<name>Antibodies</name>
+				<color>0,255,0</color>
+				<subMaxColorImpactCon>1</subMaxColorImpactCon>
+			</family>
+			<family id="ag+ab">
+				<name>Antigen+Antibody Complex</name>
+				<color>0,0,255</color>
+				<subMaxColorImpactCon>1</subMaxColorImpactCon>
+			</family>
+			<family id="Ck">
+				<name>Cytokines</name>
+				<color>1,1,1</color>
+				<subMaxColorImpactCon>1</subMaxColorImpactCon>
+			</family>
+			<family id="TCR">
+				<name>T Cell Receptor</name>
+			</family>
+			<family id="MHC">
+				<name>Major Histocompatibility Complex</name>
+			</family>
+			<family id="MHC+ag">
+				<name>MHC + antigen peptide complex</name>
+			</family>
+			<family id="acids">
+				<name>Acids</name>
+			</family>
+			<family id="FcRs">
+				<name>Fc receptors</name>
+			</family>
+		</families>
+		<substances>
+			<substance id="ag" kDif="0.01" kDeg="-0.04">
+				<name>Antigen</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="antigens"/>
+				<mutate>true</mutate>
+				<startBit>0</startBit>
+				<endBit>31</endBit>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="ha1" kDif="0.01" kDeg="-0.04">
+				<name>HA1</name>
+				<bitIdentifier>117930785</bitIdentifier> <!-- 0707 7B21h -->
+				<family reference="antigens"/>
+				<mutate>true</mutate>
+				<startBit>0</startBit>
+				<endBit>31</endBit>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="na1" kDif="0.01" kDeg="-0.04">
+				<name>NA1</name>
+				<bitIdentifier>757930797</bitIdentifier> <!-- 2D2D 1B2Dh -->
+				<family reference="antigens"/>
+				<mutate>true</mutate>
+				<startBit>0</startBit>
+				<endBit>31</endBit>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="ha2" kDif="0.01" kDeg="-0.04">
+				<name>HA2</name>
+				<bitIdentifier>370542114</bitIdentifier> <!-- 1616 0622h -->
+				<family reference="antigens"/>
+				<mutate>true</mutate>
+				<startBit>0</startBit>
+				<endBit>31</endBit>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="na2" kDif="0.01" kDeg="-0.04">
+				<name>NA2</name>
+				<bitIdentifier>1010568157</bitIdentifier> <!-- 3C3C 0BDDh -->
+				<family reference="antigens"/>
+				<mutate>true</mutate>
+				<startBit>0</startBit>
+				<endBit>31</endBit>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="na3" kDif="0.01" kDeg="-0.04">
+				<name>NA3</name>
+				<bitIdentifier>3037</bitIdentifier> <!-- 0000 0BDDh -->
+				<family reference="antigens"/>
+				<mutate>true</mutate>
+				<startBit>0</startBit>
+				<endBit>31</endBit>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="ab" kDif="0.01" kDeg="-0.04">
+				<name>Antibody</name>
+				<bitIdentifier>2290679807</bitIdentifier> <!-- 8888FFFFh Fc bits + variable bits -->
+				<family reference="antibodies"/>
+				<mutate>true</mutate>
+				<startBit>0</startBit>
+				<endBit>15</endBit>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="at" kDif="0.02" kDeg="-0.02">
+				<name>Antibiotic</name>
+				<bitIdentifier>2290615518</bitIdentifier> <!-- 888804DEh Fc bits + variable bits -->
+				<family reference="antibodies"/>
+				<mutate>true</mutate>
+				<startBit>0</startBit>
+				<endBit>15</endBit>
+				<mergeable>true</mergeable>
+				<color>0,0,0</color>
+			</substance>
+			<substance id="IL-2" kDif="0.1" kDeg="-0.05">
+				<name>Interleukin-2</name>
+				<bitIdentifier>0</bitIdentifier>
+				<family reference="Ck"/>
+				<color>255,127,0</color>
+			</substance>
+			<substance id="IL-12" kDif="0.1" kDeg="-0.05">
+				<name>Interleukin-12</name>
+				<bitIdentifier>0</bitIdentifier>
+				<family reference="Ck"/>
+				<color>127,127,0</color>
+			</substance>
+			<substance id="IFN-Gamma" kDif="0.1" kDeg="-0.05">
+				<name>Interferon-Gamma</name>
+				<bitIdentifier>0</bitIdentifier>
+				<family reference="Ck"/>
+				<color>255,255,0</color>
+			</substance>
+			<substance id="tcr.cd8" kDif="0" kDeg="-0.001">
+				<name>Th CD8+ Receptor</name>
+				<bitIdentifier>4294963440</bitIdentifier> <!-- FFFF-F0F0h, last 4 hex digits complement MHC Class I -->
+				<family reference="TCR"/>
+				<mutate>true</mutate>
+				<startBit>16</startBit>
+				<endBit>31</endBit>
+			</substance>
+			<substance id="tcr.cd4" kDif="0" kDeg="-0.001">
+				<name>Th CD4+ Receptor</name>
+				<bitIdentifier>4294905615</bitIdentifier> <!-- FFFF-0F0Fh, last 4 hex digits complement MHC Class II -->
+				<family reference="TCR"/>
+				<mutate>true</mutate>
+				<startBit>16</startBit>
+				<endBit>31</endBit>
+			</substance>
+			<substance id="mhc1" kDif="0" kDeg="-0.001">
+				<name>MHC Class I</name>
+				<bitIdentifier>3855</bitIdentifier> <!-- 0F0Fh, complements TCR CD8+ -->
+				<family reference="MHC"/>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="mhc2" kDif="0" kDeg="-0.001">
+				<name>MHC Class II</name>
+				<bitIdentifier>61680</bitIdentifier> <!-- F0F0h, complements TCR CD4+ -->
+				<family reference="MHC"/>
+				<mergeable>true</mergeable>
+			</substance>
+			<substance id="FcR" kDif="0.01" kDeg="-0.001">
+				<name>Fc Receptor</name>
+				<bitIdentifier>2004287488</bitIdentifier> <!-- 77770000h, complements antibody FC bits -->
+				<family reference="FcRs"/>
+			</substance>
+			<substance id="sialic" kDif="0.01" kDeg="-0.001"> 
+				<name>Sialic Acid</name>
+				<bitIdentifier>1234</bitIdentifier> <!-- 04D2h -->
+				<family reference="acids"/>
+			</substance>
+		</substances>
+		<subFamilyMergeRules>
+			<SubFamilyMergeCondition id="merge:ag+ab">
+				<familyOne reference="antigens"/>
+				<familyTwo reference="antibodies"/>
+				<newFamily reference="ag+ab"/>
+				<affinDependent>true</affinDependent>
+				<minAffinity>0.7</minAffinity>
+				<fromBit>0</fromBit>
+				<toBit>15</toBit>
+			</SubFamilyMergeCondition>
+			<SubFamilyMergeCondition id="merge:mhc+ag">
+				<familyOne reference="MHC"/>
+				<familyTwo reference="antigens"/>
+				<newFamily reference="MHC+ag"/>
+				<affinDependent>false</affinDependent>
+				<minAffinity>1</minAffinity>
+				<fromBit>16</fromBit>
+				<toBit>15</toBit>
+			</SubFamilyMergeCondition>
+		</subFamilyMergeRules>
+	</substanceMan>
+	<agentMan>
+		<!--
+		*************************
+		This is the Th cell agent
+		*************************
+		-->
+		<agentDefinition name="Th cell">
+			<agentPrototype>
+				<genome>
+					<!--
+					**************************
+					********* Life ***********
+					**************************
+					-->
+					<gene>
+						<!-- This gene defines life span in naive state -->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Naive</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.005</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<!-- This gene defines life span in activated state-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.01</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<!-- This gene defines life span in effector state-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Effector</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.05</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!-- This gene defines life span in memory state -->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Memory</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.0005</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					******** Movement ********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					******** Behavior ********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>1</conBase>
+								<conThreshold>10</conThreshold>
+								<indexCon>0</indexCon>
+								<localOrSuperficial>false</localOrSuperficial> <!-- Produced superficially -->
+								<substance>tcr.cd4</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Naive</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<endBit>31</endBit>
+								<indexAg>0</indexAg>
+								<indexSub>1</indexSub>
+								<family reference="MHC+ag"/>
+								<minMatch>0.7</minMatch>
+								<startBit>0</startBit>
+								<substance>tcr.cd4</substance>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>0.5</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<index>0</index>
+								<msg>Th activated by </msg>
+							</AgentAction>-->
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>1</indexSub>
+								<subRef>mhc2+ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Activated</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>-1</indexCon>
+								<substance>IL-2</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-2</substance>
+								<minQuantity>3.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<index>-1</index>
+								<substance>IL-2</substance>
+								<minQuantity>16.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>1.0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0.01</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Activated</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-2</substance>
+								<minQuantity>3.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<index>-1</index>
+								<substance>IL-2</substance>
+								<minQuantity>22.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>1.0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0.01</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Activated</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-2</substance>
+								<minQuantity>4.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>2.0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Effector</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SimpleAffinityCondition">
+								<index>-1</index>
+								<substance1>tcr.cd4</substance1>
+								<substance2>mhc2+ag</substance2>
+								<startBit>0</startBit>
+								<endBit>31</endBit>
+								<minAffin>0.80</minAffin>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>2</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<index>-1</index>
+								<substance>IL-2</substance>
+								<minQuantity>2</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Memory</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Effector</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>-1</indexCon>
+								<substance>IFN-Gamma</substance>
+								<conBase>0.5</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Memory</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>tcr.cd4</substance>
+								<family reference="MHC+ag"/>
+								<startBit>0</startBit>
+								<endBit>31</endBit>
+								<minMatch>0.80</minMatch>
+								<indexAg>0</indexAg>
+								<indexSub>-1</indexSub>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>2</numClones>
+								<mutRate>0.01</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Effector</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0.01</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Activated</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>tcr.cd4</string>
+						<SubstanceProxy>
+							<substance reference="tcr.cd4"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IFN-Gamma</string>
+						<SubstanceProxy>
+							<substance reference="IFN-Gamma"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IL-2</string>
+						<SubstanceProxy>
+							<substance reference="IL-2"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IL-12</string>
+						<SubstanceProxy>
+							<substance reference="IL-12"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>mhc2+ag</string>
+						<SubstanceProxy>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="Phase">Naive,Activated,Effector,Memory</stateType>
+				</states>
+				<color>255,20,225</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*************************
+		This is the Tc cell agent
+		*************************
+		-->
+		<agentDefinition name="Tc cell">
+			<agentPrototype>
+				<genome>
+					<!--
+					**************************
+					********* Life ***********
+					**************************
+					-->
+					<gene>
+						<!-- This gene defines life span in naive state -->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Naive</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.005</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<!-- This gene defines life span in activated state-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.01</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<!-- This gene defines life span in effector state-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Effector</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.05</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!-- This gene defines life span in memory state -->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Memory</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.0005</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					******** Movement ********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					******** Behavior ********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>tcr.cd8</substance>
+								<conThreshold>10</conThreshold>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- Produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Naive</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>tcr.cd8</substance>
+								<family reference="MHC+ag"/>
+								<startBit>0</startBit>
+								<endBit>31</endBit>
+								<minMatch>0.7</minMatch>
+								<indexAg>0</indexAg>
+								<indexSub>1</indexSub>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-12</substance>
+								<minQuantity>0.5</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>1</indexSub>
+								<subRef>mhc1+ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Activated</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-12</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<substance>IL-2</substance>
+								<conBase>0.001</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>3.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<substance>IL-2</substance>
+								<minQuantity>16.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-12</substance>
+								<minQuantity>1.0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>2</numClones>
+								<mutRate>0.01</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Activated</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-2</substance>
+								<minQuantity>3.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<index>-1</index>
+								<substance>IL-2</substance>
+								<minQuantity>22.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>1.0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0.01</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Activated</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>2.0</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-12</substance>
+								<minQuantity>1.0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Effector</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SimpleAffinityCondition">
+								<substance1>tcr.cd8</substance1>
+								<substance2>mhc1+ag</substance2>
+								<startBit>0</startBit>
+								<endBit>31</endBit>
+								<minAffin>0.8</minAffin>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<substance>IL-12</substance>
+								<minQuantity>2</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<substance>IL-2</substance>
+								<minQuantity>2</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<index>-1</index>
+								<msg>Th Memory was created!</msg>
+							</AgentAction>-->
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Memory</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Effector</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>tcr.cd8</substance>
+								<family reference="MHC+ag"/>
+								<startBit>0</startBit>
+								<endBit>31</endBit>
+								<minMatch>0.7</minMatch>
+								<indexAg>0</indexAg>
+								<indexSub>1</indexSub>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<substance>IFN-Gamma</substance>
+								<conBase>0.1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.KillAction">
+								<index>0</index>
+							</AgentAction>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<index>0</index>
+								<msg>Tc cytotoxic!</msg>
+							</AgentAction>-->
+						</actions>
+					</gene>
+					<!--<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Memory</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>tcr.cd8</substance>
+								<family reference="MHC+ag"/>
+								<startBit>0</startBit>
+								<endBit>31</endBit>
+								<minMatch>0.8</minMatch>
+								<indexAg>0</indexAg>
+								<indexSub>-1</indexSub>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>-1</index>
+								<substance>IL-12</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>2</numClones>
+								<mutRate>0.01</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Effector</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0.01</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Activated</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>-->
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>tcr.cd8</string>
+						<SubstanceProxy>
+							<substance reference="tcr.cd8"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IFN-Gamma</string>
+						<SubstanceProxy>
+							<substance reference="IFN-Gamma"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IL-2</string>
+						<SubstanceProxy>
+							<substance reference="IL-2"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IL-12</string>
+						<SubstanceProxy>
+							<substance reference="IL-12"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>mhc1+ag</string>
+						<SubstanceProxy>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="Phase">Naive,Activated,Effector,Memory</stateType>
+				</states>
+				<color>200,20,100</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*************************
+		This is the APC agent
+		*************************
+		-->
+		<agentDefinition name="APC cell">
+			<agentPrototype>
+				<genome>
+					<!--
+					**************************
+					********* Life ***********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.005</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Processing</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.01</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					******* Movement *********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					********** Behavior *******
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>FcR</substance>
+								<conThreshold>10</conThreshold>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- Produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition">
+								<indexCon>0</indexCon>
+								<indexSub>1</indexSub>
+								<subFamily reference="antigens"/>
+								<minQuantity>0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>1</indexSub>
+								<subRef>ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ag</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be consumed locally -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>mhc2+ag</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced on the agent surface -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<substance>IL-12</substance>
+								<conBase>2</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Processing</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<substance>IL-12</substance>
+								<conBase>8</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Processing</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IFN-Gamma</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Activated</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>FcR</substance>
+								<startBit>16</startBit>
+								<endBit>31</endBit>
+								<minMatch>0.8</minMatch>
+								<indexAg>0</indexAg>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConInAgentCondition">
+								<indexPrevAgent>0</indexPrevAgent>
+								<indexCon>1</indexCon>
+								<indexSub>2</indexSub>
+								<indexAg>3</indexAg>
+								<subFamily reference="antigens"/>
+								<minQuantity>0.001</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>2</indexSub>
+								<subRef>ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.KillAction">
+								<index>3</index>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Processing</stateValue>
+							</AgentAction>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<index>-1</index>
+								<msg>Killed bacteria by FcR - Ab+Ag recognition</msg>
+							</AgentAction>-->
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>mhc2+ag</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced on the agent surface -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<substance>IL-12</substance>
+								<conBase>4</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.2</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConInAgentCondition">
+								<indexCon>0</indexCon>
+								<indexSub>1</indexSub>
+								<indexAg>2</indexAg>
+								<subFamily reference="antigens"/>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>1</indexSub>
+								<subRef>ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.KillAction">
+								<index>2</index>
+							</AgentAction>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<index>-1</index>
+								<msg>Killed bacteria by PAMP</msg>
+							</AgentAction>-->
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Processing</stateValue>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>mhc2+ag</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced on the agent surface -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<substance>IL-12</substance>
+								<conBase>4</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>ag</string>
+						<SubstanceProxy>
+							<substance reference="ag"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IFN-Gamma</string>
+						<SubstanceProxy>
+							<substance reference="IFN-Gamma"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IL-12</string>
+						<SubstanceProxy>
+							<substance reference="IL-12"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>FcR</string>
+						<SubstanceProxy>
+							<substance reference="FcR"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>mhc2</string>
+						<SubstanceProxy>
+							<substance reference="mhc2"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>mhc2+ag</string>
+						<SubstanceProxy>
+							<subRef1>mhc2</subRef1>
+							<subRef2>ag</subRef2>
+							<familyMergeRule reference="merge:mhc+ag"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="Phase">Activated,Processing</stateType>
+				</states>
+				<color>100,200,15</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*****************************
+		This the B cell agent
+		*****************************
+		-->
+		<agentDefinition name="B cell">
+			<agentPrototype>
+				<genome>
+					<!--
+					**************************
+					********* Life ***********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Naive</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.005</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.01</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Somatic hypermutation</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Plasma</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.05</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Memory</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.001</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					******** Movement ********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					******** Behavior ********
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ab</substance>
+								<conThreshold>10</conThreshold>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- Produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Naive</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInCellCondition">
+								<substance>ab</substance>
+								<family reference="antigens"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.74</minMatch>
+								<indexSub>0</indexSub>
+								<indexCon>1</indexCon>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>0</indexSub>
+								<subRef>ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ag</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be consumed locally, not superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>mhc2+ag</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Naive</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInCellCondition">
+								<substance>ab</substance>
+								<family reference="antigens"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.74</minMatch>
+								<indexSub>0</indexSub>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>1.0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>0</indexSub>
+								<subRef>ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Activated</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Naive</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>ab</substance>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.74</minMatch>
+								<indexAg>-1</indexAg>
+								<indexSub>0</indexSub>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>1.0</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>0</indexSub>
+								<subRef>ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Activated</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SimpleAffinityCondition">
+								<substance1>ag</substance1>
+								<substance2>ab</substance2>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minAffin>0.80</minAffin>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>3</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition" complement="true"> 
+								<subFamily reference="antibodies"/>
+								<minQuantity>4</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Plasma</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>3</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition" complement="true"> 
+								<subFamily reference="antibodies"/>
+								<minQuantity>5</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0.05</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Somatic hypermutation</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Activated</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition" complement="true"> 
+								<subFamily reference="antibodies"/>
+								<minQuantity>4</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<substance>IL-2</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SimpleAffinityCondition">
+								<substance1>ag</substance1>
+								<substance2>ab</substance2>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minAffin>0.80</minAffin>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Memory</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Somatic hypermutation</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>6</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition" complement="true"> 
+								<subFamily reference="antibodies"/>
+								<minQuantity>4</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0.2</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Somatic hypermutation</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Somatic hypermutation</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IL-2</substance>
+								<minQuantity>6</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SimpleAffinityCondition">
+								<substance1>ag</substance1>
+								<substance2>ab</substance2>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minAffin>0.80</minAffin>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition" complement="true"> 
+								<subFamily reference="antibodies"/>
+								<minQuantity>4</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>2</numClones>
+								<mutRate>0</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Plasma</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Activated</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Somatic hypermutation</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition" complement="true"> 
+								<subFamily reference="antibodies"/>
+								<minQuantity>4</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<substance>IL-2</substance>
+								<minQuantity>1</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SimpleAffinityCondition">
+								<substance1>ag</substance1>
+								<substance2>ab</substance2>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minAffin>0.80</minAffin>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Phase</stateType>
+								<stateValue>Memory</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Somatic hypermutation</string>
+								</stateValues>
+							</AgentCondition>
+							<!--<AgentCondition class="org.laseeb.LAIS.agent.conditions.SimpleAffinityCondition" complement="true">
+								<substance1>ag</substance1>
+								<substance2>ab</substance2>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minAffin>0.80</minAffin>
+							</AgentCondition>-->
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Plasma</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition" complement="true"> 
+								<subFamily reference="antibodies"/>
+								<minQuantity>4</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ab</substance>
+								<conBase>2</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be produced locally, not superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Phase</stateType>
+								<stateValues length="1">
+									<string>Memory</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInCellCondition">
+								<substance>ab</substance>
+								<family reference="antigens"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.80</minMatch>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>4</numClones>
+								<mutRate>0</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Plasma</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>2</numClones>
+								<mutRate>0</mutRate>
+								<cloneStateMap>
+									<entry>
+										<string>Phase</string>
+										<string>Activated</string>
+									 </entry>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>ag</string>
+						<SubstanceProxy>
+							<substance reference="ag"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ab</string>
+						<SubstanceProxy>
+							<substance reference="ab"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>mhc2</string>
+						<SubstanceProxy>
+							<substance reference="mhc2"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IL-2</string>
+						<SubstanceProxy>
+							<substance reference="IL-2"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>mhc2+ag</string>
+						<SubstanceProxy>
+							<subRef1>mhc2</subRef1>
+							<subRef2>ag</subRef2>
+							<familyMergeRule reference="merge:mhc+ag"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="Phase">Naive,Activated,Somatic hypermutation,Plasma,Memory</stateType>
+				</states>
+				<color>100,100,210</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		********************************
+		This is the Epithelial Cell Agent
+		********************************
+		-->
+		<agentDefinition name="Epithelial">
+			<agentPrototype id="Epithelial">
+				<genome>
+					<!--
+					**************************
+					********** Behavior *******
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition" complement="true">
+								<substance>IFN-Gamma</substance>
+								<minQuantity>0.1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>sialic</substance>
+								<conThreshold>10</conThreshold>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- Produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>0</index>
+								<substance>IFN-Gamma</substance>
+								<minQuantity>2.5</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>sialic</substance>
+								<conBase>-0.5</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- Consumed superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.001</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>IFN-Gamma</substance>
+								<minQuantity>10</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<msg>IFN Kills!</msg>
+							</AgentAction>-->
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>IFN-Gamma</string>
+						<SubstanceProxy>
+							<substance reference="IFN-Gamma"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>IL-12</string>
+						<SubstanceProxy>
+							<substance reference="IL-12"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>sialic</string>
+						<SubstanceProxy>
+							<substance reference="sialic"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>mhc1</string>
+						<SubstanceProxy>
+							<substance reference="mhc1"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ag</string>
+						<SubstanceProxy>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>mhc1+ag</string>
+						<SubstanceProxy>
+							<subRef1>mhc1</subRef1>
+							<subRef2>ag</subRef2>
+							<familyMergeRule reference="merge:mhc+ag"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="Condition">Healthy,Infected</stateType>
+				</states>
+				<color>225,225,225</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		******************
+		Epithelial Builder
+		******************
+		-->
+		<agentDefinition name="Epithelial Builder">
+			<agentPrototype>
+				<genome>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Status</stateType>
+								<stateValues length="1">
+									<string>No Build</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConInAgentCondition">
+								<indexAg>0</indexAg>
+								<substance reference="sialic"/>
+								<concentration>0.001</concentration>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Status</stateType>
+								<stateValue>Build</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Status</stateType>
+								<stateValues length="1">
+									<string>Build</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConInAgentCondition" complement="true">
+								<indexAg>0</indexAg>
+								<substance reference="sialic"/>
+								<concentration>0.001</concentration>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProduceAgentAction">
+								<numAgents>1</numAgents>
+								<mutRate>0</mutRate>
+								<agStateMap>
+									<entry stateType="Condition">Healthy</entry>
+								</agStateMap>
+								<agentToProduce reference="Epithelial"/>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Status</stateType>
+								<stateValue>No Build</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>sialic</string>
+						<SubstanceProxy>
+							<substance reference="sialic"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="Status">Build,No Build</stateType>
+				</states>
+				<color>245,245,245</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*****************************
+		This a INFLUENZA A agent
+		*****************************
+		-->
+		<agentDefinition name="Influenza A">
+			<agentPrototype id="fluA">
+				<genome>
+					<!--
+					***********************************
+					Agent dies with a given probability.
+					***********************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.010</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					Agent moves randomly.
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.RandomWalkCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**********************************************
+					Behavior.
+					**********************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>HA</substance>
+								<conThreshold>10</conThreshold>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- Produced superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>HA</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> 
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>NA</substance>
+								<conThreshold>10</conThreshold>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- Produced superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>NA</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>true</localOrSuperficial>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>HA</substance>
+								<family reference="acids"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0</minMatch>
+								<indexAg>0</indexAg>
+								<indexMinMatch>1</indexMinMatch>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexFromConditions>1</indexFromConditions>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexAg>0</indexAg>
+								<newSubRef>HA</newSubRef>
+								<subRef>HA</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexAg>0</indexAg>
+								<newSubRef>HA</newSubRef>
+								<subRef>ag</subRef>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>HA</substance>
+								<family reference="acids"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0</minMatch>
+								<indexAg>0</indexAg>
+								<indexMinMatch>1</indexMinMatch>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexFromConditions>1</indexFromConditions>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexAg>0</indexAg>
+								<newSubRef>NA</newSubRef>
+								<subRef>NA</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexAg>0</indexAg>
+								<newSubRef>NA</newSubRef>
+								<subRef>ag</subRef>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInAgentCondition">
+								<substance>HA</substance>
+								<family reference="acids"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0</minMatch>
+								<indexAg>0</indexAg>
+								<indexMinMatch>1</indexMinMatch>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConInAgentCondition">
+								<indexPrevAgent>0</indexPrevAgent>
+								<substance reference="sialic"/>
+								<concentration>1.5</concentration>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexFromConditions>1</indexFromConditions>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexAg>0</indexAg>
+								<newSubRef>HA</newSubRef>
+								<subRef>HA</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexAg>0</indexAg>
+								<newSubRef>NA</newSubRef>
+								<subRef>NA</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexAg>0</indexAg>
+								<newSubRef>HA</newSubRef>
+								<subRef>ag</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<indexAg>0</indexAg>
+								<stateType>Condition</stateType>
+								<stateValue>Infected</stateValue>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.InsertGeneAction">
+								<indexAg>0</indexAg>
+								<gene>
+									<conditions>
+										<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+											<probability>0.005</probability>
+										</AgentCondition>
+										<AgentCondition class="org.laseeb.LAIS.agent.conditions.SimpleAffinityCondition">
+											<index>0</index>
+											<substance1>NA</substance1>
+											<substance2>sialic</substance2>
+											<startBit>0</startBit>
+											<endBit>15</endBit>
+											<minAffin>0</minAffin>
+										</AgentCondition>
+									</conditions>
+									<actions>
+										<AgentAction class="org.laseeb.LAIS.agent.actions.ProduceAgentAction">
+											<indexWeight>0</indexWeight>
+											<numAgents>10</numAgents>
+											<mutRate>0.01</mutRate>
+											<runtimeSubRef>
+												<subRef ref="HA">HA</subRef>
+												<subRef ref="NA">NA</subRef>
+											</runtimeSubRef>
+											<supSubConMap>
+												<substance name="HA">10.0</substance>
+												<substance name="NA">10.0</substance>
+											</supSubConMap>
+											<agentToProduce reference="fluA"/>
+										</AgentAction>
+										<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+											<index>0</index>
+											<msg>Flu bursted and killed epithelial! Affin:</msg>
+										</AgentAction>-->
+										<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+										</AgentAction>
+									</actions>
+								</gene>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.InsertGeneAction">
+								<indexAg>0</indexAg>
+								<gene>
+									<conditions>
+										<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+											<indexToActions>0</indexToActions>
+											<probability>1</probability>
+										</AgentCondition>
+									</conditions>
+									<actions>
+										<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+											<indexCon>0</indexCon>
+											<substance>mhc1+ag</substance>
+											<conThreshold>10</conThreshold>
+											<conBase>1</conBase>
+											<localOrSuperficial>false</localOrSuperficial> <!-- Produced superficially -->
+										</AgentAction>
+									</actions>
+								</gene>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.InsertGeneAction">
+								<indexAg>0</indexAg>
+								<gene>
+									<conditions>
+										<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+											<probability>0.1</probability>
+										</AgentCondition>
+									</conditions>
+									<actions>
+										<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+											<newSubRef>HA</newSubRef>
+											<subRef>ag</subRef>
+										</AgentAction>
+									</actions>
+								</gene>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.InsertGeneAction">
+								<indexAg>0</indexAg>
+								<gene>
+									<conditions>
+										<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+											<probability>0.1</probability>
+										</AgentCondition>
+									</conditions>
+									<actions>
+										<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+											<newSubRef>NA</newSubRef>
+											<subRef>ag</subRef>
+										</AgentAction>
+									</actions>
+								</gene>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInCellCondition">
+								<substance>HA</substance>
+								<family reference="antibodies"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.8</minMatch>
+								<indexSub>0</indexSub>
+								<indexCon>1</indexCon>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>0</indexSub>
+								<subRef>ab</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ab</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be consumed locally, not superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>HA</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be consumed superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>HA+ab</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInCellCondition">
+								<substance>NA</substance>
+								<family reference="antibodies"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.8</minMatch>
+								<indexSub>0</indexSub>
+								<indexCon>1</indexCon>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>0</indexSub>
+								<subRef>ab</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ab</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be consumed locally, not superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>NA</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be consumed superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>NA+ab</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubstanceStringCondition">
+								<indexSubstanceString>0</indexSubstanceString>
+								<subRef>HA</subRef>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubstanceStringCondition">
+								<indexSubstanceStringPrev>0</indexSubstanceStringPrev>
+								<indexSubstanceString>0</indexSubstanceString>
+								<subRef>NA</subRef>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Subtype</stateType>
+								<indexStateValue>0</indexStateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>HA</string>
+						<SubstanceProxy>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>NA</string>
+						<SubstanceProxy>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ab</string>
+						<SubstanceProxy>
+							<substance reference="ab"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>HA+ab</string>
+						<SubstanceProxy>
+							<subRef1>HA</subRef1>
+							<subRef2>ab</subRef2>
+							<familyMergeRule reference="merge:ag+ab"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>NA+ab</string>
+						<SubstanceProxy>
+							<subRef1>NA</subRef1>
+							<subRef2>ab</subRef2>
+							<familyMergeRule reference="merge:ag+ab"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="Subtype">HA1NA1,HA1NA2,HA2NA1,HA2NA2</stateType>
+				</states>
+				<color>255,0,0</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*****************************
+		This is Bacteria A agent
+		*****************************
+		-->
+		<agentDefinition name="Bacteria A">
+			<agentPrototype>
+				<genome>
+					<!--
+					***********************************
+					Agent dies with a given probability.
+					***********************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.010</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					*****************************************************************************************
+					Agent clones itself a number of times, with a given probability and a given mutation rate.
+					*****************************************************************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.011</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0</mutRate>
+								<cloneStateMap>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					Agent moves with inertia.
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**********************************************
+					Agent releases an arbitray quantity of antigen.
+					**********************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ag</substance>
+								<conBase>10</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!--To be produced locally -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ag</substance>
+								<conThreshold>20</conThreshold>
+								<conBase>0.2</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!--To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**********************************************
+					If there is locally more than a given quantity of specific antibody, the antibody will bind the
+					superficial antigen, forming antigen-antibody complexes on the agent's surface and consuming
+					antibody from the location.
+					**********************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInCellCondition">
+								<substance>ag</substance>
+								<family reference="antibodies"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.8</minMatch>
+								<indexSub>0</indexSub>
+								<indexCon>1</indexCon>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>0</indexSub>
+								<subRef>ab</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ab</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be consumed locally, not superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ag</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be consumed superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ag+ab</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition"> 
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be observed superficially -->
+								<subFamily reference="ag+ab"/>
+								<minQuantity>2</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.9</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<index>-1</index>
+								<msg>Bac killed by ab</msg>
+							</AgentAction>-->
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>ag</string>
+						<SubstanceProxy>
+							<substance reference="ag"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ab</string>
+						<SubstanceProxy>
+							<substance reference="ab"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ag+ab</string>
+						<SubstanceProxy>
+							<subRef1>ag</subRef1>
+							<subRef2>ab</subRef2>
+							<familyMergeRule reference="merge:ag+ab"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<color>255,0,0</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*****************************
+		This a Bacteria A Vaccine agent
+		*****************************
+		-->
+		<agentDefinition name="Vaccine">
+			<agentPrototype>
+				<genome>
+					<!--
+					***********************************
+					Agent dies with a given probability.
+					***********************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.010</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					Agent moves with inertia.
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**********************************************
+					Agent releases an arbitray quantity of antigen.
+					**********************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ag</substance>
+								<conBase>10</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!--To be produced locally -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ag</substance>
+								<conThreshold>20</conThreshold>
+								<conBase>0.2</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!--To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**********************************************
+					If there is locally more than a given quantity of specific antibody, the antibody will bind the
+					superficial antigen, forming antigen-antibody complexes on the agent's surface and consuming
+					antibody from the location.
+					**********************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInCellCondition">
+								<substance>ag</substance>
+								<family reference="antibodies"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.8</minMatch>
+								<indexSub>0</indexSub>
+								<indexCon>1</indexCon>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>0</indexSub>
+								<subRef>ab</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ab</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be consumed locally, not superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ag</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be consumed superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ag+ab</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition"> 
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be observed superficially -->
+								<subFamily reference="ag+ab"/>
+								<minQuantity>2</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.9</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<index>-1</index>
+								<msg>Bac killed by ab</msg>
+							</AgentAction>-->
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>ag</string>
+						<SubstanceProxy>
+							<substance reference="ag"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ab</string>
+						<SubstanceProxy>
+							<substance reference="ab"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ag+ab</string>
+						<SubstanceProxy>
+							<subRef1>ag</subRef1>
+							<subRef2>ab</subRef2>
+							<familyMergeRule reference="merge:ag+ab"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<color>155,0,0</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*****************************
+		This a Bacteria B agent (the same as A, but with different antigen)
+		*****************************
+		-->
+		<agentDefinition name="Bacteria B">
+			<agentPrototype>
+				<genome>
+					<!--
+					***********************************
+					Agent dies with a given probability.
+					***********************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.010</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					*****************************************************************************************
+					Agent clones itself a number of times, with a given probability and a given mutation rate.
+					*****************************************************************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.011</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.CloneAction">
+								<numClones>1</numClones>
+								<mutRate>0</mutRate>
+								<cloneStateMap>
+								</cloneStateMap>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**************************
+					Agent moves with inertia.
+					**************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**********************************************
+					Agent releases an arbitray quantity of antigen.
+					**********************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ag</substance>
+								<conBase>10</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!--To be produced locally -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>0</indexCon>
+								<substance>ag</substance>
+								<conThreshold>20</conThreshold>
+								<conBase>0.2</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!--To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--
+					**********************************************
+					If there is locally more than a given quantity of specific antibody, the antibody will bind the
+					superficial antigen, forming antigen-antibody complexes on the agent's surface and consuming
+					antibody from the location.
+					**********************************************
+					-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConAffinInCellCondition">
+								<substance>ag</substance>
+								<family reference="antibodies"/>
+								<startBit>0</startBit>
+								<endBit>15</endBit>
+								<minMatch>0.8</minMatch>
+								<indexSub>0</indexSub>
+								<indexCon>1</indexCon>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.SetSubRefAction">
+								<indexSub>0</indexSub>
+								<subRef>ab</subRef>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ab</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- To be consumed locally, not superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ag</substance>
+								<conBase>-1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be consumed superficially -->
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<indexCon>1</indexCon>
+								<substance>ag+ab</substance>
+								<conBase>1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be produced superficially -->
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubFamilyConCondition"> 
+								<localOrSuperficial>false</localOrSuperficial> <!-- To be observed superficially -->
+								<subFamily reference="ag+ab"/>
+								<minQuantity>2</minQuantity>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.9</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<!--<AgentAction class="org.laseeb.LAIS.agent.actions.DebugAction">
+								<index>-1</index>
+								<msg>Bac killed by ab</msg>
+							</AgentAction>-->
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>ag</string>
+						<SubstanceProxy>
+							<substance reference="ha1"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ab</string>
+						<SubstanceProxy>
+							<substance reference="ab"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>ag+ab</string>
+						<SubstanceProxy>
+							<subRef1>ag</subRef1>
+							<subRef2>ab</subRef2>
+							<familyMergeRule reference="merge:ag+ab"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<color>255,150,150</color>
+			</agentPrototype>
+		</agentDefinition>
+	</agentMan>
+</LAISModel>

@@ -1,0 +1,28 @@
+<LAISDataTrack>
+	<familyConcentration>
+		<family>Antigens</family>
+		<family>Antibodies</family>
+		<family>Antigen+Antibody Complex</family>
+	</familyConcentration>
+	<familyDiversity>
+		<family>Antigen+Antibody Complex</family>
+		<family>Antibodies</family>
+		<family>Antigens</family>
+	</familyDiversity>
+	<substances>
+		<substance>Interleukin-2</substance>
+		<substance>Interleukin-12</substance>
+		<substance>Interferon-Gamma</substance>
+		<substance>Antibiotic</substance>
+	</substances>
+	<agents>
+		<agent>Bacteria A</agent>
+		<agent>Bacteria B</agent>		
+		<agent>Vaccine</agent>
+	</agents>
+	<agentStates>
+		<agent name="Th cell">Phase</agent>
+		<agent name="APC cell">Phase</agent>
+		<agent name="B cell">Phase</agent>
+	</agentStates>
+</LAISDataTrack>

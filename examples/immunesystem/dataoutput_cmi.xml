@@ -1,0 +1,29 @@
+<LAISDataTrack>
+	<familyConcentration>
+		<family>Antigens</family>
+		<family>Antibodies</family>
+		<family>Antigen+Antibody Complex</family>
+	</familyConcentration>
+	<familyDiversity>
+		<family>Antigen+Antibody Complex</family>
+		<family>Antibodies</family>
+		<family>Antigens</family>
+	</familyDiversity>
+	<substances>
+		<substance>Interleukin-2</substance>
+		<substance>Interleukin-12</substance>
+		<substance>Interferon-Gamma</substance>
+	</substances>
+	<agents>
+		<agent>Epithelial</agent>
+		<agent>Influenza A</agent>
+	</agents>
+	<agentStates>
+		<agent name="Th cell">Phase</agent>
+		<agent name="Tc cell">Phase</agent>
+		<agent name="APC cell">Phase</agent>
+		<agent name="B cell">Phase</agent>
+		<agent name="Epithelial">Condition</agent>
+		<agent name="Influenza A">Subtype</agent>
+	</agentStates>
+</LAISDataTrack>

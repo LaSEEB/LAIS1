@@ -1,0 +1,19 @@
+<LAISDataTrack>
+	<substances>
+		<substance>Pheromone</substance>
+		<substance>Humidity</substance>
+		<substance>Toxicity</substance>
+		<substance>BodyHeat</substance>
+	</substances>
+	<agents>
+		<agent>WildMale</agent>
+		<agent>SterileMale</agent>
+		<agent>Female</agent>
+		<agent>Human</agent>
+		<agent>IHuman</agent>
+	</agents>
+	<agentStates>
+		<agent name="Female">Blood,State,Infected</agent>
+		<agent name="WildMale">State</agent>
+	</agentStates>
+</LAISDataTrack>

@@ -1,0 +1,9 @@
+<LAISDataTrack>
+	<substances>
+		<substance>Pheromone</substance>
+	</substances>
+	<agents>
+		<agent>Predator</agent>
+		<agent>Prey</agent>
+	</agents>
+</LAISDataTrack>

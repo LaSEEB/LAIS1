@@ -1,0 +1,96 @@
+<LAISScript>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>WildMale</agentPrototype>
+			<agStateMap>
+				<entry stateType="State">Adult</entry>
+			</agStateMap>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>1250</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Female</agentPrototype>
+			<agStateMap>
+				<entry stateType="State">Non-Fertile</entry>
+				<entry stateType="Blood">No</entry>
+				<entry stateType="Infected">No</entry>
+				<entry stateType="IEgg">No</entry>
+			</agStateMap>			
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>750</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>OviContainer</agentPrototype>			
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>300</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Human</agentPrototype>
+			<agStateMap>
+				<entry stateType="Infected">No</entry>
+			</agStateMap>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>700</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.PerformAtButtonPress">
+			<button>Release Sterile</button>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>SterileMale</agentPrototype>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>500</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.PerformAtButtonPress">
+			<button>Release infected mosquitoes(10)</button>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Female</agentPrototype>
+			<agStateMap>
+				<entry stateType="State">Non-Fertile</entry>
+				<entry stateType="Blood">No</entry>
+				<entry stateType="Infected">Yes</entry>
+				<entry stateType="IEgg">No</entry>
+			</agStateMap>			
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>10</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent><scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.PerformAtButtonPress">
+			<button>Release Infecteed Human</button>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>IHuman</agentPrototype>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>1</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+</LAISScript>

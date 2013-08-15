@@ -1,0 +1,265 @@
+<LAISModel id="model">
+	<spaceFactory class="org.laseeb.LAIS.space.HexSpaceFactory">
+		<x>50</x>
+		<y>50</y>
+	</spaceFactory>
+	<dt>1</dt>
+	<dx2>1</dx2>
+	<minConThreshold>0.01</minConThreshold>
+	<substanceMan>
+		<families>
+			<family id="pheroFamily">
+				<name>Pheromone family</name>
+				<subMaxColorImpactCon>1</subMaxColorImpactCon>
+			</family>
+			<family id="locations">
+				<name>Locations</name>
+				<subMaxColorImpactCon>10000</subMaxColorImpactCon>
+			</family>
+		</families>
+		<substances>
+			<substance id="pheroNF" kDif="0.000001" kDeg="-0.03">
+				<name>Pheromone No Food</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="pheroFamily"/>
+				<color>255,0,0</color>
+			</substance>
+			<substance id="pheroHF" kDif="0.000001" kDeg="-0.03">
+				<name>Pheromone Has Food</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="pheroFamily"/>
+				<color>0,255,0</color>
+			</substance>
+			<substance id="home" kDif="0" kDeg="0">
+				<name>Home</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="locations"/>
+				<color>127,127,0</color>
+			</substance>
+			<substance id="food" kDif="0" kDeg="0">
+				<name>Food</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="locations"/>
+				<color>0,0,255</color>
+			</substance>
+		</substances>
+		<subFamilyMergeRules>
+		</subFamilyMergeRules>
+	</substanceMan>
+	<agentMan>
+		<!--
+		*************************
+		Ant agent
+		*************************
+		-->
+		<agentDefinition name="Ant">
+			<agentPrototype>
+				<genome>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Has Food</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.WeightedWalkCondition">
+								<conditionMap>
+									<entry>
+										<walkCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+											<index>0</index>
+										</walkCondition>
+										<weight>0.1</weight>
+									</entry>
+									<entry>
+										<walkCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+											<index>0</index>
+											<subMap>
+												<entry subRef="pheromoneNF">1.0</entry>
+											</subMap>
+										</walkCondition>
+										<weight>1</weight>
+									</entry>
+								</conditionMap>
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>No Food</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.WeightedWalkCondition">
+								<conditionMap>
+									<entry>
+										<walkCondition class="org.laseeb.LAIS.agent.conditions.InertialMovementCondition">
+											<index>0</index>
+										</walkCondition>
+										<weight>0.1</weight>
+									</entry>
+									<entry>
+										<walkCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+											<index>0</index>
+											<subMap>
+												<entry subRef="pheromoneHF">1.0</entry>
+											</subMap>
+										</walkCondition>
+										<weight>1</weight>
+									</entry>
+								</conditionMap>
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<!--<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Has Food</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.01</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>No Food</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>-->
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Has Food</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>1</conBase>
+								<indexCon>0</indexCon>
+								<localOrSuperficial>true</localOrSuperficial> <!-- Produced locally -->
+								<substance>pheromoneHF</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>No Food</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexToActions>0</indexToActions>
+								<probability>1</probability>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>1</conBase>
+								<indexCon>0</indexCon>
+								<localOrSuperficial>true</localOrSuperficial> <!-- Produced locally -->
+								<substance>pheromoneNF</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Has Food</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>home</substance>
+								<minQuantity>0.1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>No Food</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene>
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>No Food</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<substance>food</substance>
+								<minQuantity>0.1</minQuantity>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Has Food</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>pheromoneHF</string>
+						<SubstanceProxy>
+							<substance reference="pheroHF"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>pheromoneNF</string>
+						<SubstanceProxy>
+							<substance reference="pheroNF"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>food</string>
+						<SubstanceProxy>
+							<substance reference="food"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>home</string>
+						<SubstanceProxy>
+							<substance reference="home"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="State">Has Food,No Food</stateType>
+				</states>
+				<color>100,20,200</color>
+			</agentPrototype>
+		</agentDefinition>
+	</agentMan>
+</LAISModel>

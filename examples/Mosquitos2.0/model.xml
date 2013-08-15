@@ -1,0 +1,1332 @@
+<LAISModel id="model">
+	<spaceFactory class="org.laseeb.LAIS.space.SquareSpaceFactory">
+		<x>300</x>
+		<y>300</y>
+		<torus>true</torus>
+	</spaceFactory>
+	<dt>1</dt>
+	<dx2>1</dx2>
+	<minConThreshold>0.00000001</minConThreshold>
+	<substanceMan>
+		<families>
+		<family id="pheroFamily">
+				<name>Pheromone family</name>
+				<subMaxColorImpactCon>1</subMaxColorImpactCon>
+			</family>
+		</families>
+		<substances>
+			<substance id="pheromone" kDif="0.3" kDeg="-0.05">
+				<name>Pheromone</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="pheroFamily"/>
+				<color>200,50,50</color>
+			</substance>
+			<substance id="Oviprox" kDif="0.3" kDeg="-0.05">
+				<name>Humidity</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="pheroFamily"/>
+				<color>100,100,255</color>
+			</substance>
+			<substance id="AdultPhero" kDif="0.0" kDeg="1">
+				<name>adultPhero</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="pheroFamily"/>
+				<color>0,250,0</color>
+			</substance>
+			<substance id="toxic" kDif="0.001" kDeg="-0.5">
+				<name>Toxicity</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="pheroFamily"/>
+				<color>0,0,0</color>
+			</substance>
+			<substance id="Heat" kDif="0.3" kDeg="-0.05">
+				<name>BodyHeat</name>
+				<bitIdentifier>0</bitIdentifier> <!-- 0000 0000h -->
+				<family reference="pheroFamily"/>
+				<color>250,150,0</color>
+			</substance>
+		</substances>
+		<subFamilyMergeRules>
+		</subFamilyMergeRules>
+	</substanceMan>
+	<agentMan>
+		<!--***********************
+		Oviposition Container
+		**************************-->
+		<agentDefinition name="OviContainer">
+			<agentPrototype id="oviContain">
+				<genome>
+					<gene>
+						<conditions>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- Produced locally -->
+								<substance>OviRef</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene><!-- Oviposition spots are less toxic -->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>0</index>
+								<minQuantity>0.01</minQuantity>
+								<substance>toxic</substance>
+							</AgentCondition> 
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>-0.5</conBase>
+								<indexCon>0</indexCon>
+								<localOrSuperficial>true</localOrSuperficial> <!-- Oviposition spots are less toxic -->
+								<substance>toxic</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>OviRef</string>
+						<SubstanceProxy>
+							<substance reference="Oviprox"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>toxic</string>
+						<SubstanceProxy>
+							<substance reference="toxic"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+				</states>
+				<color>0,0,100</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*************************
+		Human
+		*************************
+		-->
+		<agentDefinition name="Human">
+			<agentPrototype id="human">
+				<genome>
+					<gene> <!--Moving Randomly-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.RandomWalkCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Pheromone-->
+						<conditions>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- Produced locally -->
+								<substance>heatRef</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>heatRef</string>
+						<SubstanceProxy>
+							<substance reference="Heat"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="Infected">Yes,No</stateType>
+				</states>
+				<color>150,100,50</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*************************
+		Wild Male
+		*************************
+		-->
+		<agentDefinition name="WildMale">
+			<agentPrototype id="wild">
+				<genome>
+					<gene> <!--Adult Starting adults-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>SAdult</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Adult</stateValue>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>10.1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- place substance on self -->
+								<substance>adultRef</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Adult-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.9</probability> 
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Pupa</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Adult</stateValue>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>10.1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- place substance on self -->
+								<substance>adultRef</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Pupa-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.8</probability> 
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Larva</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Pupa</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mortality rate for new mosquitos-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Egg</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability> <!--Mortality Rate-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Larva-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Egg</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.11</probability> <!--Maturing Chance-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Larva</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Looks for Females-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Adult</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+								<index>0</index>
+								<chemopower>0.9</chemopower>
+								<subMap>
+									<entry subRef="pheromoneAgRef">1.0</entry>
+								</subMap>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (adult)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Adult</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (Pupa)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Pupa</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (Larva)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Larva</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Increase Toxicity-->
+						<conditions>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>0.0011</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- place substance locally -->
+								<substance>toxic</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Death by Toxicity-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>0</index>
+								<minQuantity>0.1</minQuantity>
+								<substance>toxic</substance>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexFromConditions>0</indexFromConditions>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>pheromoneAgRef</string>
+						<SubstanceProxy>
+							<substance reference="pheromone"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>adultRef</string>
+						<SubstanceProxy>
+							<substance reference="AdultPhero"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>toxic</string>
+						<SubstanceProxy>
+							<substance reference="toxic"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="State">Egg,Larva,Pupa,Adult,SAdult</stateType>
+				</states>
+				<color>0,250,50</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*************************
+		Sterile Male
+		*************************
+		-->
+		<agentDefinition name="SterileMale">
+			<agentPrototype id="sterile">
+				<genome>
+					<gene> <!--Dies before maturing into adult-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.9</probability> 
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Pupa</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Pupa-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.8</probability> 
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Larva</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Pupa</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Larva-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Egg</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.11</probability> <!--Maturing Chance-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Larva</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Looks for Females-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+								<index>0</index>
+								<chemopower>0.9</chemopower>
+								<subMap>
+									<entry subRef="pheromoneAgRef">1.0</entry>
+								</subMap>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Adult</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>1.1</conBase>
+								<localOrSuperficial>false</localOrSuperficial> <!-- place substance on self -->
+								<substance>adultRef</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (adult)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Adult</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (Pupa)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Pupa</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (Larva)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Larva</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Death by Toxicity-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>0</index>
+								<minQuantity>0.1</minQuantity>
+								<substance>toxic</substance>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexFromConditions>0</indexFromConditions>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Increase Toxicity-->
+						<conditions>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>0.0011</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- place substance locally -->
+								<substance>toxic</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>pheromoneAgRef</string>
+						<SubstanceProxy>
+							<substance reference="pheromone"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>adultRef</string>
+						<SubstanceProxy>
+							<substance reference="AdultPhero"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>toxic</string>
+						<SubstanceProxy>
+							<substance reference="toxic"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="State">Egg,Larva,Pupa,Adult</stateType>
+				</states>
+				<color>255,0,0</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*************************
+		Sterile Female
+		*************************
+		-->
+		<agentDefinition name="SterileFemale">
+			<agentPrototype id="sterileF">
+				<genome>
+					<gene> <!--Dies before maturing into adult-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.9</probability> 
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Pupa</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Pupa-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.8</probability> 
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Larva</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Pupa</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Larva-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Egg</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.11</probability> <!--Maturing Chance-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Larva</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (Pupa)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Pupa</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (Larva)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Larva</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Death by Toxicity-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>0</index>
+								<minQuantity>0.1</minQuantity>
+								<substance>toxic</substance>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexFromConditions>0</indexFromConditions>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Increase Toxicity-->
+						<conditions>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>0.0011</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- place substance locally -->
+								<substance>toxic</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>pheromoneAgRef</string>
+						<SubstanceProxy>
+							<substance reference="pheromone"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>toxic</string>
+						<SubstanceProxy>
+							<substance reference="toxic"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="State">Egg,Larva,Pupa</stateType>
+				</states>
+				<color>0,255,255</color>
+			</agentPrototype>
+		</agentDefinition>
+		<!--
+		*************************
+		Female Mosquito
+		*************************
+		-->
+		<agentDefinition name="Female">
+			<agentPrototype id="female">
+				<genome>
+				<gene> <!--Becomes Adult-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.9</probability> 
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Pupa</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Non-Fertile</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Pupa-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.8</probability> 
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Larva</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Pupa</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mortality rate for new mosquitos-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Egg</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability> <!--Mortality Rate-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Becomes Larva-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Egg</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.11</probability> <!--Maturing Chance-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Larva</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Moving Randomly if not Fertile-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Non-Fertile</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>Yes</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.RandomWalkCondition">
+								<index>0</index>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Looking for human blood-non-fertile-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>No</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Non-Fertile</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+								<index>0</index>
+								<chemopower>0.9</chemopower>
+								<subMap>
+									<entry subRef="heatRef">1.0</entry>
+								</subMap>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Looking for human blood-sterile-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>No</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Sterile</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+								<index>0</index>
+								<chemopower>0.9</chemopower>
+								<subMap>
+									<entry subRef="heatRef">1.0</entry>
+								</subMap>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Looking for human blood-fertile-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>No</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+								<index>0</index>
+								<chemopower>0.9</chemopower>
+								<subMap>
+									<entry subRef="heatRef">1.0</entry>
+								</subMap>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Moving toward Oviposition Container if Sterile-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Sterile</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>Yes</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+								<index>0</index>
+								<chemopower>0.9</chemopower>
+								<subMap>
+									<entry subRef="OviRef">1.0</entry>
+								</subMap>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Moving toward Oviposition Container if Fertile-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Fertile</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>Yes</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConNeighMovCondition">
+								<index>0</index>
+								<chemopower>0.9</chemopower>
+								<subMap>
+									<entry subRef="OviRef">1.0</entry>
+								</subMap>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.WalkAction">
+								<index>0</index>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (adult-non-fertile)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Non-Fertile</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (adult-fertile)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Fertile</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (adult-sterile)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Sterile</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (Pupa)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Pupa</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Mosquito Death (Larva)-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.15</probability>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Larva</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Meeting a Wild Mosquito-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Non-Fertile</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.AgentPresenceCondition">
+								<index>0</index>
+								<prototype reference="wild"/>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConInAgentCondition">
+								<concentration>0.9</concentration>
+								<indexPrevAgent>0</indexPrevAgent>
+								<substance reference="AdultPhero"/>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.7</probability> <!--Meeting Chance-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Fertile</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Meeting a sterile mosquito-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Non-Fertile</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.AgentPresenceCondition">
+								<index>0</index>
+								<prototype reference="sterile"/>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConInAgentCondition">
+								<concentration>0.9</concentration>
+								<indexPrevAgent>0</indexPrevAgent>
+								<substance reference="AdultPhero"/>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.7</probability> <!--meeting chance-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Sterile</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Reproduction-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Fertile</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>Yes</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.AgentPresenceCondition">
+								<index>0</index>
+								<prototype reference="oviContain"/>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Non-Fertile</stateValue>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Blood</stateType>
+								<stateValue>No</stateValue>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProduceAgentAction">
+								<numAgents>50</numAgents>
+								<mutRate>0</mutRate>
+								<agentToProduce reference="wild"/>
+								<agStateMap>
+									<entry stateType="State">Egg</entry>
+								</agStateMap>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProduceAgentAction">
+								<numAgents>50</numAgents>
+								<mutRate>0</mutRate>
+								<agStateMap>
+									<entry stateType="State">Egg</entry>
+									<entry stateType="Blood">No</entry>
+								</agStateMap>
+								<agentToProduce reference="female"/>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--If Sterile-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Sterile</string>
+								</stateValues>
+							</AgentCondition>
+								<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>Yes</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.AgentPresenceCondition">
+								<index>0</index>
+								<prototype reference="oviContain"/>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>State</stateType>
+								<stateValue>Non-Fertile</stateValue>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Blood</stateType>
+								<stateValue>No</stateValue>
+							</AgentAction>
+						<AgentAction class="org.laseeb.LAIS.agent.actions.ProduceAgentAction">
+								<numAgents>50</numAgents>
+								<mutRate>0</mutRate>
+								<agentToProduce reference="sterile"/>
+								<agStateMap>
+									<entry stateType="State">Egg</entry>
+								</agStateMap>
+							</AgentAction>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProduceAgentAction">
+								<numAgents>50</numAgents>
+								<mutRate>0</mutRate>
+								<agStateMap>
+									<entry stateType="State">Egg</entry>
+								</agStateMap>
+								<agentToProduce reference="sterileF"/>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Pheromone-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>State</stateType>
+								<stateValues length="1">
+									<string>Non-Fertile</string>
+								</stateValues>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>1</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- Produced locally -->
+								<substance>pheromoneAgRef</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Death by Toxicity-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.SubConCondition">
+								<index>0</index>
+								<minQuantity>0.1</minQuantity>
+								<substance>toxic</substance>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<indexFromConditions>0</indexFromConditions>
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Increase Toxicity-->
+						<conditions>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ProdConsSubAction">
+								<conBase>0.0011</conBase>
+								<localOrSuperficial>true</localOrSuperficial> <!-- place substance locally -->
+								<substance>toxic</substance>
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Meeting a Human and failing-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>No</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.AgentPresenceCondition">
+								<index>0</index>
+								<prototype reference="human"/>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.5</probability> <!--death probability-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ApoptosisAction">
+							</AgentAction>
+						</actions>
+					</gene>
+					<gene> <!--Meeting a Human and succeeding-->
+						<conditions>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StateCondition">
+								<stateType>Blood</stateType>
+								<stateValues length="1">
+									<string>No</string>
+								</stateValues>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.AgentPresenceCondition">
+								<index>0</index>
+								<prototype reference="human"/>
+							</AgentCondition>
+							<AgentCondition class="org.laseeb.LAIS.agent.conditions.StochasticCondition">
+								<probability>0.7</probability> <!--stinging chance-->
+							</AgentCondition>
+						</conditions>
+						<actions>
+							<AgentAction class="org.laseeb.LAIS.agent.actions.ChangeStateAction">
+								<stateType>Blood</stateType>
+								<stateValue>Yes</stateValue>
+							</AgentAction>
+						</actions>
+					</gene>
+				</genome>
+				<refSubMap>
+					<entry>
+						<string>pheromoneAgRef</string>
+						<SubstanceProxy>
+							<substance reference="pheromone"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>OviRef</string>
+						<SubstanceProxy>
+							<substance reference="Oviprox"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>AdultPhero</string>
+						<SubstanceProxy>
+							<substance reference="AdultPhero"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>toxic</string>
+						<SubstanceProxy>
+							<substance reference="toxic"/>
+						</SubstanceProxy>
+					</entry>
+					<entry>
+						<string>heatRef</string>
+						<SubstanceProxy>
+							<substance reference="Heat"/>
+						</SubstanceProxy>
+					</entry>
+				</refSubMap>
+				<states>
+					<stateType type="State">Egg,Larva,Pupa,Non-Fertile,Fertile,Sterile</stateType>
+					<stateType type="Blood">Yes,No</stateType>
+					<stateType type="Infected">Yes,No</stateType>
+				</states>
+				<color>0,0,255</color>
+			</agentPrototype>
+		</agentDefinition>
+	</agentMan>
+</LAISModel>

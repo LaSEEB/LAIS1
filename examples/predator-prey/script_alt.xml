@@ -1,0 +1,13 @@
+<LAISScript>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Prey</agentPrototype>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>1</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+</LAISScript>

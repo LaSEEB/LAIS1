@@ -1,0 +1,348 @@
+<LAISScript>
+	<!-- 
+	*******************************
+	****** INITIAL CONDITIONS *****
+	*******************************
+	-->
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Epithelial</agentPrototype>
+			<agStateMap>
+				<entry stateType="Condition">Healthy</entry>
+			</agStateMap>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="sialic">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>196</quantity>
+			</quantityConstrain>
+			<locationConstrain class="org.laseeb.LAIS.event.agdeploy.RectangularLocationConstrain">
+				<minX>0</minX>
+				<minY>0</minY>
+				<maxX>13</maxX>
+				<maxY>13</maxY>
+			</locationConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Epithelial Builder</agentPrototype>
+			<agStateMap>
+				<entry stateType="Status">No Build</entry>
+			</agStateMap>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>3</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Th cell</agentPrototype>
+			<agStateMap>
+				<entry stateType="Phase">Naive</entry>
+			</agStateMap>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.5</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="tcr.cd4">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>90</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Tc cell</agentPrototype>
+			<agStateMap>
+				<entry stateType="Phase">Naive</entry>
+			</agStateMap>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.5</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="tcr.cd8">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>37</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>APC cell</agentPrototype>
+			<agStateMap>
+				<entry stateType="Phase">Activated</entry>
+			</agStateMap>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="FcR">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>15</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>0</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>B cell</agentPrototype>
+			<agStateMap>
+				<entry stateType="Phase">Naive</entry>
+			</agStateMap>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.5</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="ab">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>45</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<!--
+	***********************************
+	***** Equilibrium conditions ******
+	***********************************
+	-->
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtInterval">
+			<interval>1</interval>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Th cell</agentPrototype>
+			<agStateMap>
+				<entry stateType="Phase">Naive</entry>
+			</agStateMap>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.5</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="tcr.cd4">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.RandomQuantityConstrain">
+				<maxQuantity>1</maxQuantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtInterval">
+			<interval>3</interval>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Tc cell</agentPrototype>
+			<agStateMap>
+				<entry stateType="Phase">Naive</entry>
+			</agStateMap>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.5</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="tcr.cd8">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.RandomQuantityConstrain">
+				<maxQuantity>1</maxQuantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtInterval">
+			<interval>6</interval>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>APC cell</agentPrototype>
+			<agStateMap>
+				<entry stateType="Phase">Activated</entry>
+			</agStateMap>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="FcR">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>1</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtInterval">
+			<interval>2</interval>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>B cell</agentPrototype>
+			<agStateMap>
+				<entry stateType="Phase">Naive</entry>
+			</agStateMap>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.5</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="ab">
+					10.0
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.RandomQuantityConstrain">
+				<maxQuantity>1</maxQuantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<!-- 
+	*******************************
+	***** Bug insertion ******
+	*******************************
+	-->	
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>50</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Influenza A</agentPrototype>
+			<agStateMap>
+				<entry stateType="Subtype">HA1NA2</entry>
+			</agStateMap>
+			<runtimeSubRef>
+				<subRef ref="HA">HA1</subRef>
+				<subRef ref="NA">NA2</subRef>
+			</runtimeSubRef>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.01</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="HA">10.0</substance>
+				<substance name="NA">10.0</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>25</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>500</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Influenza A</agentPrototype>
+			<agStateMap>
+				<entry stateType="Subtype">HA1NA2</entry>
+			</agStateMap>
+			<runtimeSubRef>
+				<subRef ref="HA">HA1</subRef>
+				<subRef ref="NA">NA2</subRef>
+			</runtimeSubRef>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.01</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="HA">10.0</substance>
+				<substance name="NA">10.0</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>25</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	<!--	
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.ScheduleAtTick">
+			<tick>50</tick>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Influenza A</agentPrototype>
+			<agStateMap>
+				<entry stateType="Subtype">HA2NA1</entry>
+			</agStateMap>
+			<runtimeSubRef>
+				<subRef ref="HA">HA2</subRef>
+				<subRef ref="NA">NA1</subRef>
+			</runtimeSubRef>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0.01</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="HA">10.0</substance>
+				<substance name="NA">10.0</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>25</quantity>
+			</quantityConstrain>
+		</Event>
+	</scriptedEvent>
+	
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.PerformAtButtonPress">
+			<button>Insert bacteria A!</button>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Generic Bacteria</agentPrototype>
+			<agStateMap>
+			</agStateMap>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="ag">
+					10
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>45</quantity>
+			</quantityConstrain>
+			<locationConstrain class="org.laseeb.LAIS.event.agdeploy.RandomLocationConstrain" />
+		</Event>
+	</scriptedEvent> 
+	<scriptedEvent>
+		<ScriptingType class="org.laseeb.LAIS.event.PerformAtButtonPress">
+			<button>Insert bacteria B!</button>
+		</ScriptingType>
+		<Event class="org.laseeb.LAIS.event.agdeploy.AgentDeploy">
+			<agentPrototype>Generic Bacteria B</agentPrototype>
+			<agStateMap>
+			</agStateMap>
+			<mutRateConstrain class="org.laseeb.LAIS.event.agdeploy.FixedMutationRateConstrain">
+				<mutationRate>0</mutationRate>
+			</mutRateConstrain>
+			<iscConstrain class="org.laseeb.LAIS.event.agdeploy.FixedInitSupSubConConstrain">
+				<substance name="agb">
+					10
+				</substance>
+			</iscConstrain>
+			<quantityConstrain class="org.laseeb.LAIS.event.agdeploy.FixedQuantityConstrain">
+				<quantity>45</quantity>
+			</quantityConstrain>
+			<locationConstrain class="org.laseeb.LAIS.event.agdeploy.RandomLocationConstrain" />
+		</Event>
+	</scriptedEvent>   -->
+
+</LAISScript>

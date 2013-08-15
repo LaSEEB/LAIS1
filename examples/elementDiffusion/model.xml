@@ -1,0 +1,30 @@
+<LAISModel id="model" rngSeed="1" numThreads="8">
+	<spaceFactory class="org.laseeb.LAIS.space.SquareSpaceFactory">
+		<x>50</x>
+		<y>50</y>
+		<torus>true</torus>
+		<moore>true</moore>
+	</spaceFactory>
+	<dt>1</dt>
+	<dx2>1</dx2>
+	<minConThreshold>0.00000001</minConThreshold>
+	<substanceMan>
+		<families>
+			<family id="pheroFamily">
+				<name>Pheromone family</name>
+				<subMaxColorImpactCon>1</subMaxColorImpactCon>
+			</family>
+		</families>
+		<substances>
+			<substance id="pheromone" kDif="0.03" kDeg="-0.005">
+				<name>Pheromone</name>
+				<family reference="pheroFamily"/>
+				<color>255,0,0</color>
+			</substance>
+		</substances>
+		<subFamilyMergeRules>
+		</subFamilyMergeRules>
+	</substanceMan>
+	<agentMan>
+	</agentMan>
+</LAISModel>

@@ -1,0 +1,15 @@
+<LAISDataTrack>
+	<familyConcentration>
+	</familyConcentration>
+	<familyDiversity>
+	</familyDiversity>
+	<substances>
+		<substance>Pheromone No Food</substance>
+		<substance>Pheromone Has Food</substance>
+	</substances>
+	<agents>
+	</agents>
+	<agentStates>
+		<agent name="Ant">State</agent>
+	</agentStates>
+</LAISDataTrack>

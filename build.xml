@@ -1,0 +1,273 @@
+<!-- ========================================================== -->
+<!-- Adapted from the buildfile for Repast J 3.1                -->
+<!-- ========================================================== -->
+
+<project name="LAIS" default="usage" basedir=".">
+
+	<description>
+		Ant build file for LAIS.
+	</description>
+
+	<!-- =================================================================== -->
+	<!-- Properties                                                          -->
+	<!-- =================================================================== -->
+	<tstamp />
+	<property name="name" value="LAIS" />
+	<property name="version" value="beta1" />
+	<property name="year" value="2009" />
+
+	<presetdef name="javac">
+		<javac includeantruntime="false" />
+	</presetdef>
+
+	<!-- Define the project base directories -->
+	<property name="root.dir" value="." />
+	<property name="doc.dir" value="${root.dir}/doc" />
+	<property name="lib.dir" value="${root.dir}/lib" />
+	<property name="src.dir" value="${root.dir}/src" />
+	<property name="util.dir" value="${root.dir}/util" />
+	<property name="resource.dir" value="${root.dir}/resources" />
+	<property name="example.dir" value="${root.dir}/examples" />
+	<property name="test.src.dir" value="${root.dir}/src_tests" />	
+
+	<!-- Define the project binary directories -->
+	<property name="bin.dir" value="${root.dir}/bin" />
+	<property name="test.bin.dir" value="${root.dir}/bin_tests" />
+	<property name="test.reports.dir" value="${root.dir}/test_reports" />
+
+	<!-- Define the distribution directories -->
+	<property name="dist.dir" value="${root.dir}/dist/LAIS" />
+	<property name="dist.doc.dir" value="${dist.dir}/doc" />
+	<property name="dist.util.dir" value="${dist.dir}/util" />
+	<property name="dist.lib.dir" value="${dist.dir}/lib" />
+	<property name="dist.src.dir" value="${dist.dir}/src" />
+	<property name="dist.example.dir" value="${dist.dir}/examples" />
+	<property name="dist.resource.dir" value="${dist.dir}/resources" />	
+
+	<!-- Classpath -->
+	<path id="project.class.path">
+		<pathelement location="lib/"/>
+		<pathelement path="lib/asm.jar"/>
+		<pathelement path="lib/beanbowl.jar"/>
+		<pathelement path="lib/colt.jar"/>
+		<pathelement path="lib/jmf.jar"/>
+		<pathelement path="lib/junit-4.5.jar"/>
+		<pathelement path="lib/log4j-1.2.15.jar"/>
+		<pathelement path="lib/plot.jar"/>
+		<pathelement path="lib/ProActive.jar"/>
+		<pathelement path="lib/repast.jar"/>
+		<pathelement path="lib/simple-xml-2.1.4.jar"/>
+		<pathelement path="lib/trove.jar"/>
+		<pathelement path="lib/violinstrings-1.0.2.jar"/>
+	</path>
+
+	<!-- =================================================================== -->
+	<!-- Help on usage                                                       -->
+	<!-- =================================================================== -->
+	<target name="usage">
+		<echo message="" />
+		<echo message="" />
+		<echo message="=== LAIS build control ===" />
+		<echo message="" />
+		<echo message=" Available targets are:" />
+		<echo message="" />
+		<echo message="   -----> Creating distributions in ${dist.dir}:" />
+		<echo message="   lais-all     --> Creates a complete distribution." />
+		<echo message="   lais-min     --> Creates a minimum running distribution (no source, api, utils)." />
+		<echo message="   -----> Build options:" />
+		<echo message="   compile      --> Compiles LAIS in ${bin.dir}." />
+		<echo message="   javadoc      --> Creates LAIS documentation in ${doc.dir}" />
+		<echo message="   jar          --> Creates a LAIS JAR file in ${dist.dir}." />
+		<echo message="   -----> Clean options:" />
+		<echo message="   clean-all    --> Clean everything (i.e., calls cleans bollow)." />
+		<echo message="   clean-bin    --> Clean LAIS binaries in ${bin.dir}." />
+		<echo message="   clean-docs   --> Clean documentation in ${doc.dir}." />
+		<echo message="   clean-dist   --> Clean distribution in ${dist.dir}." />
+		<echo message="   -----> Test options:" />
+		<echo message="   compile-test --> Compiles LAIS in ${test.bin.dir}." />
+		<echo message="   clean-test   --> Clean test binaries in ${test.bin.dir}." />
+		<echo message="   -----> Other options:" />
+		<echo message="   usage      --> Displays this menu (default)." />
+		<echo message="" />
+		<echo message=" See the comments inside the build.xml file for more details." />
+		<echo message="-------------------------------------------------------------" />
+		<echo message="" />
+		<echo message="" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates a distribution directory                                    -->
+	<!-- =================================================================== -->
+	<target name="-distdir">
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates full distribution                                           -->
+	<!-- =================================================================== -->
+	<target name="lais-all" depends="clean-all, compile, javadoc, -distdir, jar, -copy-all" />
+
+	<!-- =================================================================== -->
+	<!-- Creates minimum distribution                                        -->
+	<!-- =================================================================== -->
+	<target name="lais-min" depends="clean-dist, clean-bin, compile, -distdir, jar, -copy-libs, -copy-other, -copy-examples" />
+
+	<!-- =================================================================== -->
+	<!-- Copies all necessary files into the distribution directory          -->
+	<!-- =================================================================== -->
+	<target name="-copy-all" depends="-distdir, -copy-examples, -copy-src, -copy-docs, -copy-utils, -copy-libs, -copy-other" />
+
+	<!-- =================================================================== -->
+	<!-- Copies external libraries into the distribution directory           -->
+	<!-- =================================================================== -->
+	<target name="-copy-libs" depends="-distdir">
+		<mkdir dir="${dist.lib.dir}" />
+		<copy todir="${dist.lib.dir}">
+			<fileset dir="${lib.dir}" />
+		</copy>	
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Copies examples into the distribution directory                     -->
+	<!-- =================================================================== -->
+	<target name="-copy-examples" depends="-distdir">
+		<mkdir dir="${dist.example.dir}" />
+		<copy todir="${dist.example.dir}">
+			<fileset dir="${example.dir}" />
+		</copy>	
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Copies source files into the distribution directory                 -->
+	<!-- =================================================================== -->
+	<target name="-copy-src" depends="-distdir">
+		<mkdir dir="${dist.src.dir}" />
+		<copy todir="${dist.src.dir}">
+			<fileset dir="${src.dir}" />
+		</copy>	
+	</target>
+
+
+	<!-- =================================================================== -->
+	<!-- Copies examples into the distribution directory                     -->
+	<!-- =================================================================== -->
+	<target name="-copy-docs" depends="-distdir">
+		<mkdir dir="${dist.doc.dir}" />
+		<copy todir="${dist.doc.dir}">
+			<fileset dir="${doc.dir}"/>
+		</copy>	
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Copies utilities into the distribution directory                     -->
+	<!-- =================================================================== -->
+	<target name="-copy-utils" depends="-distdir">
+		<mkdir dir="${dist.util.dir}" />
+		<copy todir="${dist.util.dir}">
+			<fileset dir="${util.dir}" />
+		</copy>	
+	</target>
+
+	
+	<!-- =================================================================== -->
+	<!-- Copies other files into distribution directory                      -->
+	<!-- =================================================================== -->
+	<target name="-copy-other" depends="-distdir">
+		<mkdir dir="${dist.dir}" />
+		<copy file="LAIS.properties" todir="${dist.dir}"/>
+		<copy file="lais_dos.bat" todir="${dist.dir}"/>
+		<copy file="lais_linux.sh" todir="${dist.dir}"/>
+		<copy file="lais_win.vbs" todir="${dist.dir}"/>
+		<copy file="logdefs.xml" todir="${dist.dir}"/>
+		<chmod file="${dist.dir}/lais_linux.sh" perm="ugo+x"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Compiles the LAIS source code                                       -->
+	<!-- =================================================================== -->
+	<target name="compile" depends="clean-bin">
+		<mkdir dir="bin"/>
+		<javac source="1.6" target="1.6" srcdir="${src.dir}" destdir="${bin.dir}">
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates the lais.jar in distribution directory                      -->
+	<!-- =================================================================== -->
+	<target name="jar" depends="compile">
+		<delete file="lais.jar"/>
+		<mkdir dir="${dist.resource.dir}" />
+		<copy todir="${dist.resource.dir}">
+			<fileset dir="${resource.dir}" />
+		</copy>	
+		<jar destfile="${dist.dir}/lais.jar" basedir="${bin.dir}">
+			<manifest>
+				<attribute name="Built-By" value="LaSEEB" />
+				<attribute name="Class-Path" value="resources/images.jar lib/asm.jar lib/beanbowl.jar lib/colt.jar lib/jmf.jar lib/junit-4-5.jar lib/log4j-1.2.15.jar lib/plot.jar lib/ProActive.jar lib/repast.jar lib/simple-xml-2.1.4.jar lib/trove.jar l lib/violinstrings-1.0.2.jar" />
+				<attribute name="Main-Class" value="org.laseeb.LAIS.LAIS" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates the API documentation                                       -->
+	<!-- =================================================================== -->
+	<target name="javadoc" depends="clean-docs">
+		<mkdir dir="${doc.dir}" />
+		<javadoc access="package" author="true" destdir="${doc.dir}" doctitle="LAIS Documentation" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" overview="src/overview.html" packagenames="org.laseeb.LAIS.agent,org.laseeb.LAIS.event,org.laseeb.LAIS.event.agdeploy,org.laseeb.LAIS.gui,org.laseeb.LAIS.space,org.laseeb.LAIS,org.laseeb.LAIS.agent.conditions,org.laseeb.LAIS.agent.actions,org.laseeb.LAIS.substance,org.laseeb.LAIS.utils,org.laseeb.LAIS.event.subdeploy,org.laseeb.LAIS.output" source="1.6" sourcepath="src" splitindex="true" use="true" version="true">
+			<classpath refid="project.class.path" />
+			<link href="http://acs.lbl.gov/~hoschek/colt/api"/>
+			<link href="http://simple.sourceforge.net/download/stream/doc/javadoc/"/>
+			<link href="http://repast.sourceforge.net/api/"/>
+			<link href="http://java.sun.com/javase/6/docs/api/"/>
+		</javadoc>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Clean everything                                                    -->
+	<!-- =================================================================== -->
+	<target name="clean-all" depends="clean-bin, clean-docs, clean-dist" />
+	
+	<!-- =================================================================== -->
+	<!-- Clean documents                                                     -->
+	<!-- =================================================================== -->
+	<target name="clean-docs">
+		<delete dir="${docs.dir}" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Clean distribution                                                  -->
+	<!-- =================================================================== -->
+	<target name="clean-dist">
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Clean binaries                                                      -->
+	<!-- =================================================================== -->
+	<target name="clean-bin">
+		<delete dir="${bin.dir}" />
+	</target>
+	
+	<!-- =================================================================== -->
+	<!-- Compiles the tests                                                  -->
+	<!-- =================================================================== -->
+	<target name="compile-test" depends="clean-test">
+		<javac target="1.6" srcdir="${test.src.dir}" destdir="${test.bin.dir}">
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Clean test binaries                                                 -->
+	<!-- =================================================================== -->
+	<target name="clean-test">
+		<delete dir="${test.bin.dir}" />
+	</target>
+
+	
+
+</project>
+
+<!-- End of file -->

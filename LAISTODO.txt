@@ -1,0 +1,60 @@
+DONE for version 0.2.1
+
+- Fix bug in command line batch mode
+
+
+For version 0.3!
+
+- Bug in FixedSubDeploy
+- Global constants, global time variying variables from outer source (xml, equation)
+- Batch mode: -b batch.xml
+- XML parameter sweeping
+- Add scripting simulation end: dependent on ticks, substances, agents
+- List of constants in beggining of the model
+- Button event at end of iteration in order to avoid concurrent modification exception. DELEGATE ACTION AT THE END OF ITERATION
+- Only allow to probe cells when simulation is paused. How can we guarantee that? DELEGATE PROBING AS AN END OF ITERATION EVENT
+
+For version 0.4
+
+- DEFINE AND FORCE LAIS PARADIGM:
+* Agent moves only one cell per tick (WHY? NOT NECESSARY!)
+* Diffusion is at most one cell per tick (WHY? NOT NECESSARY!)
+* Agents can only perform changes on the cell they reside
+- Reproduce results with same rng seed
+- Cell constants, cell time varying variables from outer source (xml, png, gis)
+- HARD AND SOFT AGENTS: Abstract substance physical laws in cells; abstract other cell behavior as necessary (strategy pattern! encapsulate what varies!) => make substances a attached layer to the cell, make possible the attachment of other layers, such as temp; or just abstract physical laws? and if we want substances and temp at same time?
+
+For version 0.5 and after
+
+- Verify if xml parameters are whitin range (i.e. VALIDATE EVERYTHING!)
+- Global agent Dt (time constant)
+- Specific agent Dt (time constant)
+- Agent Condition: true (activate gene) between x ticks
+- Optimize state condition and state representation.
+- Optimize adimensional coeficient calculation (just once for sub, a sub property?)
+- SubConNeighMov with negative substances
+- Solve SimpleXML limitation: cannot reference ids which have not ocurred yet.
+- Test and comment non-tested constrains, with examples 
+- Put XML examples of all XML instatiable classes in documentation.
+- AgentProbe: use reflection to inspect agent genetic code and properties
+- Use biticons on a new LAIS controller; steadily replace repast code
+- Histogram
+- Annotate comments in XML instantiable classes, XDoclet, etc.
+
+- Deployment equilibrium, no need for quantity constrains in IS sim? 
+- User and developer manual
+- SubstanceDeploy constrain: png deploy
+- AgentDeploy constrain: png deploy
+
+Ideas
+
+- Allow several different (or equal) spaces at the same time
+- Agent change color depending on state, food carrying; better definition of agent/substance color
+- More dynamical states (int states, float states, ...), specialized agent state maps, all following the same interface
+- Only clone conditions and actions with internal state in order to save memory
+- My batch run in XML sweeping through LAIS parameters
+- Optimization: the optimizer calls LAIS in batch mode, passing respective XML files with given parameters, then analizes results, then suggests new tests, and so on. The optimizer must know where LAIS will put the results, i.e., it will have to control the output dir to a certain extent. 
+- Make cell drawing dependent only on cell size and not on DisplaySurface window size; only change cell size when zoom in or out 
+- Profile long-running multithreaded multi-core simulation for detecting possible slowdown problems.
+- GUI for building simulations
+- More efficient substance merging (some type of hash merge? do sublists by family for merging?) 
