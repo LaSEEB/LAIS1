@@ -8,7 +8,6 @@
 	<classpathentry kind="lib" path="lib/jmf.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="lib/missinglibs.txt"/>
 	<classpathentry kind="lib" path="lib/plot.jar"/>
 	<classpathentry kind="lib" path="lib/ProActive.jar"/>
 	<classpathentry kind="lib" path="lib/repast.jar"/>

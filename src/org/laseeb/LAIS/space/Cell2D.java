@@ -682,7 +682,7 @@ public class Cell2D implements SubstanceContainer, Drawable, CustomProbeable, Rn
 		int indexGivenCell = neighbors.indexOf(cell);
 		/* If given cell is not a valid neighbor, return null. */
 		if (indexGivenCell == -1)
-			throw new CellStepException("Given cell (" + cell.x + ", " + cell.y 
+			throw new RuntimeException("Given cell (" + cell.x + ", " + cell.y 
 					+ ") is not a neighbor of current cell (" + x + ", "+ y + ").");
 		/* Determine index of required neighbor cell. */
 		int indexRequestedCell = normalizeNeighborIndex(indexGivenCell + proximity, numNeighbors);

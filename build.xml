@@ -13,12 +13,8 @@
 	<!-- =================================================================== -->
 	<tstamp />
 	<property name="name" value="LAIS" />
-	<property name="version" value="beta1" />
-	<property name="year" value="2009" />
-
-	<presetdef name="javac">
-		<javac includeantruntime="false" />
-	</presetdef>
+	<property name="version" value="0.3.0" />
+	<property name="year" value="2013" />
 
 	<!-- Define the project base directories -->
 	<property name="root.dir" value="." />

@@ -465,11 +465,11 @@ public class LAISModel extends SimModelImpl {
 							getController().stopSim();
 							/* ...and log error. */
 							logger.error("Error during cell step. Cause: " + cse.getMessage());
-							if (logger.isTraceEnabled()) {
+							//if (logger.isTraceEnabled()) {
 								StackTraceElement[] steArray = cse.getStackTrace();
 								for (StackTraceElement ste : steArray)
-									logger.trace(ste.toString());
-							}
+									logger.info(ste.toString());
+							//}
 						}
 						/* Inform main thread I'm done! */
 						ca.incNumWaiting();
