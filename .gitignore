@@ -2,6 +2,5 @@ bin/
 bin_tests/
 dist/
 doc/
-*.jar
 *~
 
