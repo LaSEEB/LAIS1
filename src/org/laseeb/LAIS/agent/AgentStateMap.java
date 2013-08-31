@@ -1,8 +1,10 @@
 package org.laseeb.LAIS.agent;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.ElementMap;
@@ -99,7 +101,8 @@ public class AgentStateMap {
 	 * @return An iterator for the state types in this state map.
 	 */
 	public Iterator<String> stateTypeIterator() {
-		return map.keySet().iterator();
+		Set<String> keyCopies= new HashSet<String>(map.keySet());
+		return keyCopies.iterator();
 	}
 	
 	/**
