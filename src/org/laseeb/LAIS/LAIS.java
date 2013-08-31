@@ -1,3 +1,21 @@
+/*   
+ * This file is part of LAIS (LaSEEB Agent Interaction Simulator).
+ * 
+ * LAIS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * LAIS is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with LAIS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 package org.laseeb.LAIS;
 
 import java.awt.GraphicsEnvironment;
@@ -27,6 +45,8 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.strategy.CycleStrategy;
@@ -51,6 +71,9 @@ public class LAIS {
 	/** Default simulation ticks in batch mode. */
 	final int DEFAULT_TICKS = 2000;
 	
+	/** Default tick print in batch mode. */
+	final int DEFAULT_TICK_PRINT = 500;
+	
 	/* Properties file. */
 	private final String PROPERTIES_FILE = "LAIS.properties";
 	
@@ -70,6 +93,9 @@ public class LAIS {
 	
 	/* Data track module. */
 	private LAISDataTrack dataTrack = null;
+	
+	/* Logger. */
+	private static Logger logger = Logger.getLogger(LAIS.class);
 
 	/**
 	 * Public constructor for this class. Handles command line argument parsing,
@@ -84,6 +110,15 @@ public class LAIS {
 	 * @param args Command line arguments: [model.xml script.xml data.xml [param.txt] [SIMTICKS]]
 	 */
 	public LAIS(String[] args) {
+
+		/* Configure logger. */
+		try {
+			DOMConfigurator.configure("logdefs.xml");
+		} catch (Exception e) {
+			System.err.println("Error loading logging definitions! No logging will be performed!");
+			System.err.println(e.getMessage());
+		}
+
 		/* If more than 3 arguments are passed, then run in text mode. */
 		if (args.length > 3)
 			isGui = false;
@@ -92,7 +127,7 @@ public class LAIS {
 		try {
 			laisProperties.load(new FileReader(PROPERTIES_FILE));
 		} catch (Exception e) {
-			printMessage("Problems opening properties file '" + PROPERTIES_FILE + "'! A new file will be created.", LAIS.ERROR_MESSAGE);
+			logger.warn("Problems opening properties file '" + PROPERTIES_FILE + "'! A new file will be created.");
 			setDefaultProperties();
 		}
 		/* Check command line arguments. */
@@ -250,7 +285,7 @@ public class LAIS {
 				laisProperties.setProperty("lastDataTrackFile", "");
 		/* Check save data directory. */
 		String saveFolder = laisProperties.getProperty("lastSaveFolder");
-		if (!(new File(saveFolder)).exists())
+		if ((saveFolder == null) || !(new File(saveFolder)).exists())
 			laisProperties.setProperty("lastSaveFolder", "");
 		/* Load batch parameter file. */
 		String batchParamFile = laisProperties.getProperty("lastBatchParameterFile");
@@ -340,6 +375,7 @@ public class LAIS {
 		laisProperties.setProperty("lastRunIsBatch", "false");
 		laisProperties.setProperty("lastBatchParameterFile", "");
 		laisProperties.setProperty("lastBatchTicks", Integer.toString(DEFAULT_TICKS));
+		laisProperties.setProperty("lastBatchIntervalTickPrint", Integer.toString(DEFAULT_TICK_PRINT));
 		laisProperties.setProperty("lastFolder", "");
 	}
 
