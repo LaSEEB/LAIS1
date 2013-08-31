@@ -658,8 +658,22 @@ public class LAIS {
 			} else if (option == 1) {
 				JOptionPane.showMessageDialog(
 						null, 
-						"<html><strong>LAIS</strong>, a 2D agent-based simulation framework.<br><br>========== LASEEB 2008 ==========<br><br><em>Licence soon!</em></html>", 
-						"About LAIS!", 
+						"<html><strong>LAIS</strong>, the LaSEEB Agent Interaction Simulator<br>" +
+						"<br>" +
+						"LAIS is free software: you can redistribute it and/or modify<br>" +
+						"it under the terms of the GNU General Public License as published by<br>" +
+						"the Free Software Foundation, either version 3 of the License, or<br>" +
+						"(at your option) any later version.<br>" +
+						"<br>" +
+						"LAIS is distributed in the hope that it will be useful,<br>" + 
+						"but WITHOUT ANY WARRANTY; without even the implied warranty of<br>" +
+						"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br>" +
+						"GNU General Public License for more details.<br>" +
+						"<br>" +
+						"You should have received a copy of the GNU General Public License<br>" +
+						"along with LAIS.  If not, see <a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>.<br>" +
+						"</em></html>", 
+						"About LAIS", 
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				/* Get out of while. */
