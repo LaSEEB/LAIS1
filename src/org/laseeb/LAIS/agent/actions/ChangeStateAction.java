@@ -1,6 +1,7 @@
 package org.laseeb.LAIS.agent.actions;
 
 import org.laseeb.LAIS.agent.Agent;
+import org.laseeb.LAIS.agent.AgentException;
 import org.laseeb.LAIS.space.Cell2D;
 import org.simpleframework.xml.Element;
 
@@ -74,6 +75,13 @@ public class ChangeStateAction extends AgentAction {
 			/* ...otherwise change state of this agent. */
 			agentOfInterest = agent;
 		/* Change state value of state type in given agent. */
-		agentOfInterest.setNextState(stateType, effectiveStateValue);
+		if (!agentOfInterest.getPrototype().isValidState(stateType, effectiveStateValue))
+			throw new ActionException("Tried to change state '" + stateType + "' of agent of type '" 
+				+  agent.getPrototypeName() + "' to invalid state '" + effectiveStateValue + "'");
+		try {
+			agentOfInterest.setNextState(stateType, effectiveStateValue);
+		} catch (AgentException ae) {
+			throw new ActionException(ae);
+		}
 	}
 }

@@ -119,7 +119,7 @@ public class Agent implements Cloneable, Comparable<Agent>, SubstanceContainer, 
 	 * @throws ActionException When an error occurs while executing an action.
 	 * @throws AgentException When an error occurs during the agents performance.
 	 */
-	public void play(Cell2D cell) throws ConditionException, ActionException, AgentException {
+	public synchronized void play(Cell2D cell) throws ConditionException, ActionException, AgentException {
 		/* Set next states. */
 		Iterator<String> stateTypeIter = nextStateMap.stateTypeIterator();
 		while (stateTypeIter.hasNext()) {
@@ -286,13 +286,13 @@ public class Agent implements Cloneable, Comparable<Agent>, SubstanceContainer, 
 	 * @param stateValue The state to set, corresponding to the given state key.
 	 * @throws AgentException If the state key-value pair is not valid, according to the prototype.
 	 */
-	public void setState(String stateType, String stateValue) throws AgentException {
+	public synchronized void setState(String stateType, String stateValue) throws AgentException {
 		if (prototype.isValidState(stateType, stateValue))
 			stateMap.setState(stateType, stateValue);
 		else {
 			throw new AgentException("Invalid state type - state value pair ("
 					+ stateType + ", " + stateValue + ")"
-					+ " for agent " + prototype.getName() + "!");
+					+ " for agent " + prototype.getName() + "!  (setState method)");
 		}
 	}
 	
@@ -302,9 +302,16 @@ public class Agent implements Cloneable, Comparable<Agent>, SubstanceContainer, 
 	 * 
 	 * @param stateType The state type.
 	 * @param stateValue The state to set, corresponding to the given state key.
+	 * @throws AgentException If the state key-value pair is not valid, according to the prototype.
 	 */
-	public void setNextState(String stateType, String stateValue) {
-		nextStateMap.setState(stateType, stateValue);
+	public synchronized void setNextState(String stateType, String stateValue) throws AgentException {
+		if (prototype.isValidState(stateType, stateValue))
+			nextStateMap.setState(stateType, stateValue);
+		else {
+			throw new AgentException("Invalid state type - state value pair ("
+					+ stateType + ", " + stateValue + ")"
+					+ " for agent " + prototype.getName() + "! (setNextState method)");
+		}
 	}
 
 	/**

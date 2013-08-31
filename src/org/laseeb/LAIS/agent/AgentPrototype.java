@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.Arrays;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+import org.laseeb.LAIS.space.Cell2D;
 import org.laseeb.LAIS.substance.SubstanceException;
 import org.laseeb.LAIS.substance.SubstanceProxy;
 import org.laseeb.LAIS.utils.random.IRng;
@@ -127,6 +129,9 @@ public class AgentPrototype implements CustomProbeable, Comparable<AgentPrototyp
 	/* The name of the agent prototype. */
 	private String name;
 
+	/* Logger. */
+	private static Logger logger = Logger.getLogger(AgentPrototype.class);
+
 	/* The effectively used agent state types and state names, after XML parsing. */
 	private Map<String, String[]> stateStates;
 	
@@ -222,6 +227,11 @@ public class AgentPrototype implements CustomProbeable, Comparable<AgentPrototyp
 	 */
 	public boolean isValidState(String stateType, String stateName) {
 		if (stateStates.containsKey(stateType)) {
+			if (stateName == null) {
+				/* TODO Check if a null state name should be allowed. */
+				logger.warn("A null stateName was passed to AgentPrototype.isValidState() method.");
+				return false;
+			}
 			int index = Arrays.binarySearch(stateStates.get(stateType), stateName);
 			if (index >= 0)
 				return true;

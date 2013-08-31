@@ -101,8 +101,7 @@ public class AgentStateMap {
 	 * @return An iterator for the state types in this state map.
 	 */
 	public Iterator<String> stateTypeIterator() {
-		Set<String> keyCopies= new HashSet<String>(map.keySet());
-		return keyCopies.iterator();
+		return map.keySet().iterator();
 	}
 	
 	/**
